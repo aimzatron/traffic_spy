@@ -16,4 +16,4 @@ module TrafficSpy
 
 end
 
-require 'traffic_spy/client'
+require 'traffic_spy/models/client'

@@ -6,6 +6,8 @@ gemspec
 gem 'rake'
 gem 'pg'
 gem 'sequel'
+gem 'sinatra'
+gem 'thin'
 
 group :development do
   gem 'rspec'
@@ -14,6 +16,8 @@ group :development do
   gem 'cane'
   gem 'reek'
   gem 'sqlite3'
+  gem 'rack'
+  gem 'rack-test'
 
 end
 
