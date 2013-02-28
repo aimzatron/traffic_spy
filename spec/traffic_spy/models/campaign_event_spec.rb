@@ -24,7 +24,7 @@ describe TrafficSpy::CampaignEvent do
     describe "save" do
       it "adds an entry to the campaign_events table" do
 
-        campaign_events = described_class.new(campaign_id: 4, event_id: 4
+        campaign_events = described_class.new(campaign_id: 4, event_id: 4)
 
         campaign_events.save
 
