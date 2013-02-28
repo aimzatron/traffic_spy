@@ -10,8 +10,10 @@ gem 'sinatra'
 gem 'thin'
 
 group :development do
+  gem 'shotgun'
   gem 'rspec'
   gem 'guard-rspec'
+  gem 'rb-fsevent'
   gem 'simplecov', :require => false
   gem 'cane'
   gem 'reek'

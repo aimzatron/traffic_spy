@@ -1,10 +1,11 @@
 require 'spec_helper'
 require 'rack/test'
 
-set :environment, :development
+#set :environment, :development
 
 def app
-  Sinatra::Application
+  #Sinatra::Application
+  TrafficSpy::Server
 end
 
 describe "Traffic Spy App" do
