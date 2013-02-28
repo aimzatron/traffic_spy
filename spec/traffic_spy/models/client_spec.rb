@@ -21,19 +21,14 @@ describe TrafficSpy::Client do
 
   describe "Instance methods" do
 
-    it "saves itself to the database" do
+    describe "save" do
+      it "adds an entry to the clients table" do
+
       client = described_class.new("id", "url")
       client.save
       expect(@client_table.count).to eq 1
-    end
 
-    it "returns a collection of URLs sorted in desc order by requests" do
-      expect(client.urls.size).to eq 3
-
-      expect(client.urls[0].requests).to eq 4
-      expect(client.urls[1].requests).to eq 3
-      expect(client.urls[2].requests).to eq 1
-
+      end
     end
 
   end

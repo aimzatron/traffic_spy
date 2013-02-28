@@ -10,19 +10,19 @@ module TrafficSpy
       String :root_url
     end
 
-    DB.create_table :url do
+    DB.create_table :urls do
       primary_key :id
       String :url
       Integer :client_id
     end
 
-    DB.create_table :campaign do
+    DB.create_table :campaigns do
       primary_key :id
       String :name
       Integer :client_id
     end
 
-    DB.create_table :event do
+    DB.create_table :events do
       primary_key :id
       String :name
       Integer :client_id
