@@ -13,6 +13,7 @@ group :development do
   gem 'simplecov', :require => false
   gem 'cane'
   gem 'reek'
+  gem 'sqlite3'
 
 end
 
