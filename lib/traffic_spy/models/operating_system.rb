@@ -1,6 +1,6 @@
 module TrafficSpy
 
-  class OperatingSystems
+  class OperatingSystem
     attr_reader :id, :name
 
     def initialize(params)

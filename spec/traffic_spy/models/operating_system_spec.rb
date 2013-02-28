@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe TrafficSpy::Url do
+describe TrafficSpy::OperatingSystem do
 
   before do
-    TrafficSpy::DB["DELETE FROM operating systems"].delete
+    TrafficSpy::DB["DELETE FROM operating_systems"].delete
 
     @operating_systems_table = TrafficSpy::DB.from(:operating_systems)
   end
@@ -11,10 +11,10 @@ describe TrafficSpy::Url do
   describe "new" do
     it "creates a new entry in the database" do
 
-      operating_systems = described_class.new(id: 4, name: "OS")
+      operating_system = described_class.new(id: 4, name: "OS")
 
-      expect(operating_systems.id).to eq 4
-      expect(operating_systems.name).to eq "OS"
+      expect(operating_system.id).to eq 4
+      expect(operating_system.name).to eq "OS"
 
     end
   end
@@ -24,9 +24,9 @@ describe TrafficSpy::Url do
     describe "save" do
       it "adds an entry to the operating systems table" do
 
-        operating_systems = described_class.new(id: 4, name: "OS")
+        operating_system = described_class.new(id: 4, name: "OS")
 
-        operating_systems.save
+        operating_system.save
 
         expect(@operating_systems_table.count).to eq 1
 
