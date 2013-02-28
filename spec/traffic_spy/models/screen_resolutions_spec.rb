@@ -11,7 +11,7 @@ describe TrafficSpy::ScreenResolution do
   describe "new" do
     it "creates a new entry in the database" do
 
-      url = described_class.new(width: 1280, height: 800)
+      screen_resolution = described_class.new(width: 1280, height: 800)
 
       expect(screen_resolution.width).to eq 1280
       expect(screen_resolution.height).to eq 800
