@@ -34,6 +34,11 @@ module TrafficSpy
       Integer :height
     end
 
+    DB.create_table :web_browsers do
+      primary_key :id
+      String :name
+    end
+
   else
     DB = Sequel.postgres 'traffic-spy'
   end
@@ -45,3 +50,4 @@ require 'traffic_spy/models/url'
 require 'traffic_spy/models/campaign'
 require 'traffic_spy/models/event'
 require 'traffic_spy/models/screen_resolution'
+require 'traffic_spy/models/web_browser'

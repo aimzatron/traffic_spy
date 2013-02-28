@@ -5,7 +5,7 @@ describe TrafficSpy::ScreenResolution do
   before do
     TrafficSpy::DB["DELETE FROM screen_resolutions"].delete
 
-    @url_table = TrafficSpy::DB.from(:screen_resolutions)
+    @screen_resolutions_table = TrafficSpy::DB.from(:screen_resolutions)
   end
 
   describe "new" do
