@@ -31,6 +31,11 @@ describe "Traffic Spy App" do
         expect(last_response).to be_bad_request
       end
 
+      it "returns a message with the bad request status" do
+        post '/sources', params = {identifier:'identifier'}
+        expect(last_response.body).to_not be_empty
+      end
+
     end
 
     context "existing identifier" do
@@ -38,6 +43,12 @@ describe "Traffic Spy App" do
         TrafficSpy::Client.new('id', 'url')
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
         expect(last_response).to be_forbidden
+      end
+
+      it "returns a a message with the forbidden status" do
+        TrafficSpy::Client.new('id', 'url')
+        post '/sources', params = {identifier: 'id', rootUrl:'url'}
+        expect(last_response.body).to_not be_empty
       end
     end
 
@@ -49,10 +60,17 @@ describe "Traffic Spy App" do
 
       it "creates a new Client" do
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
-        puts last_response.inspect
         #TODO find out why this mock doesn't work
         #TrafficSpy::Client.should_receive(:new).with('id', 'url')
         expect(TrafficSpy::DB.from(:clients).count).to eq 1
+
+      end
+
+      it "it returns a json object with the identifier" do
+        post '/sources', params = {identifier: 'id', rootUrl:'url'}
+        json = JSON.parse last_response.body
+
+        expect(json["identifier"]).to eq "id"
 
       end
     end
