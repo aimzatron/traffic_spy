@@ -5,7 +5,7 @@ module TrafficSpy
 
     def initialize(params)
       @campaign_id = params[:campaign_id]
-      @event_id = params[:client_id]
+      @event_id = params[:event_id]
 
     end
 
