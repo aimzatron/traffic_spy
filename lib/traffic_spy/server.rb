@@ -42,6 +42,30 @@ module TrafficSpy
         {identifier: client.identifier}.to_json
       end
     end
+
+    def missing_required_payload?(params)
+      params[:payload].nil?
+    end
+
+    post '/sources/:identifier/data' do
+      if missing_required_payload?(params)
+        halt 400, "Request is incomplete. Missing payload."
+      end
+
+      save params[:identifier], params[:payload]
+
+
+
+    end
+
+    def save identifier, payload
+      client = Client.find_by_identifier identifier
+
+      URL.new(client_id: client.id, url:payload[:url]).save
+
+    end
+
+
   end
 
 end

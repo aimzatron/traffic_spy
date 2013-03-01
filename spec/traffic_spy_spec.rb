@@ -77,6 +77,58 @@ describe "Traffic Spy App" do
       end
     end
   end
+
+  describe "processing requests" do
+
+    context "missing payload" do
+      it "returns a 400 Bad Request" do
+        post '/sources/IDENTIFIER/data'
+        expect(last_response).to be_bad_request
+      end
+      it "returns a descriptive message" do
+        post '/sources/IDENTIFIER/data'
+        expect(last_response.body).to_not be_empty
+      end
+    end
+
+    context "unique payload" do
+      before do
+        @root_url = "http://jumpstartlab.com"
+        @identifier = "identifier"
+        TrafficSpy::Client.new(identifier: @identifier, root_url:@root_url)
+
+        @payload = {
+          url:"http://jumpstartlab.com/blog",
+          requestedAt:"2013-02-16 21:38:28 -0700",
+          respondedIn:37,
+          referredBy:"http://jumpstartlab.com",
+          requestType:"GET",
+          parameters:[],
+          eventName: "socialLogin",
+          userAgent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+          resolutionWidth:"1920",
+          resolutionHeight:"1280",
+          ip:"63.29.38.211" }.to_json
+      end
+
+      it "returns a 200 ok status" do
+        post '/sources/indentifier/data', {payload: @payload}
+        expect(last_response).to be_ok
+
+      end
+
+      it "adds the URL to the database" do
+        post '/sources/indentifier/data', {payload: @payload}
+        expect(TrafficSpy::Url.find_by_id 1).to_not be_nil
+        expect(TrafficSpy::Url.find_by_id(1).url).to eq @payload[:url]
+
+      end
+
+      #3. post
+      #4. check ALL THE THINGS )(one at a time)
+    end
+
+  end
 end
 
 
