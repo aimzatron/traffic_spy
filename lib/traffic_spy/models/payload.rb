@@ -1,6 +1,6 @@
 module TrafficSpy
 
-  class Payloads
+  class Payload
     attr_reader :browser_id, 
                 :event_id, 
                 :response_time, 
@@ -22,14 +22,14 @@ module TrafficSpy
     end
 
     def save
-      Payloads.data.insert(browser_id :browser_id, 
-                            event_id, :event_id, 
-                            response_time :response_time, 
-                            request_time :request_time, 
-                            url_id :url_id, 
-                            ip_id :ip_id, 
-                            screen_resolution_id :screen_resolution_id, 
-                            os_id :os_id)
+      Payload.data.insert(browser_id: browser_id, 
+                            event_id: event_id, 
+                            response_time: response_time, 
+                            request_time: request_time, 
+                            url_id: url_id, 
+                            ip_id: ip_id, 
+                            screen_resolution_id: screen_resolution_id, 
+                            os_id: os_id)
     end
 
     def self.data

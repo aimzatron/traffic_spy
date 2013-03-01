@@ -54,6 +54,17 @@ module TrafficSpy
       Integer :height
     end
 
+    DB.create_table :payloads do
+      Integer :browser_id 
+      Integer :event_id 
+      DateTime :response_time 
+      Integer :request_time 
+      Integer :url_id 
+      Integer :ip_id 
+      Integer :screen_resolution_id 
+      Integer :os_id
+    end
+
   else
     DB = Sequel.postgres 'traffic-spy'
   end
@@ -69,3 +80,4 @@ require 'traffic_spy/models/operating_system'
 require 'traffic_spy/models/web_browser'
 require 'traffic_spy/models/ip'
 require 'traffic_spy/models/screen_resolution'
+require 'traffic_spy/models/payload'

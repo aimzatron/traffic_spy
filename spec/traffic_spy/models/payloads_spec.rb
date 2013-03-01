@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TrafficSpy::Payloads do
+describe TrafficSpy::Payload do
 
   before do
     TrafficSpy::DB["DELETE FROM payloads"].delete
