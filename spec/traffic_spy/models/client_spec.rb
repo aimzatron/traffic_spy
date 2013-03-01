@@ -33,5 +33,14 @@ describe TrafficSpy::Client do
 
   end
 
+  describe "Class methods" do
+    it "finds a client by identifier" do
+      described_class.new(identifier:"ident", root_url:"http://url.com").save
+      client = described_class.find_by_identifier "ident"
+      expect(client.id).to eq 1
+      expect(client.root_url).to eq "http://url.com"
+    end
+  end
+
 
 end

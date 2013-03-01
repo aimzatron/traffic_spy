@@ -4,6 +4,7 @@ module TrafficSpy
     attr_reader :id, :identifier, :root_url
 
     def initialize(params)
+      @id = params[:id]
       @identifier = params[:identifier]
       @root_url = params[:root_url]
     end
@@ -21,6 +22,10 @@ module TrafficSpy
       #DB.from(:urls).where(client_id:id)
       # SELECT * FROM
       urls.sort_by{|url| url.requests.size}
+    end
+
+    def self.find_by_identifier identifier
+      Client.new data.select.where(identifier: identifier).to_a.first
     end
 
   end
