@@ -3,9 +3,13 @@ require 'spec_helper'
 describe TrafficSpy::Url do
 
   before do
-    TrafficSpy::DB["DELETE FROM urls"].delete
 
     @url_table = TrafficSpy::DB.from(:urls)
+  end
+
+  after do
+    TrafficSpy::DB["DELETE FROM urls"].delete
+    TrafficSpy::DB.from(:sqlite_sequence).where(name:"urls").delete
   end
 
   describe "new" do
@@ -37,9 +41,19 @@ describe TrafficSpy::Url do
 
   describe "class methods" do
 
+    before do
+      url = described_class.new(client_id:1, url: "http://url.com")
+      url.save
+    end
+
     it "can find a URL by id" do
-      TrafficSpy::Url.new(client_id:1, url: "http://url.com").save
       url = TrafficSpy::Url.find_by_id 1
+      expect(url.url).to eq "http://url.com"
+      expect(url.client_id).to eq 1
+    end
+
+    it "can find a URL by url" do
+      url = TrafficSpy::Url.find_by_url "http://url.com"
       expect(url.url).to eq "http://url.com"
       expect(url.client_id).to eq 1
     end

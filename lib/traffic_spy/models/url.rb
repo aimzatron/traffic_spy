@@ -19,7 +19,12 @@ module TrafficSpy
     end
 
     def self.find_by_id id
-     Url.new(data.select.where(id:id).to_a.first)
+      puts Url.data.select.to_a.inspect
+      Url.new data.select.where(id: id).to_a.first
+    end
+
+    def self.find_by_url url
+     Url.new(data.select.where(url:url).to_a.first)
     end
   end
 
