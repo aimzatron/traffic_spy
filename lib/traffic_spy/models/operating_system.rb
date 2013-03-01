@@ -10,7 +10,7 @@ module TrafficSpy
     end
 
     def save
-      OperatingSystems.data.insert(name: name)
+      OperatingSystem.data.insert(name: name)
     end
 
     def self.data
