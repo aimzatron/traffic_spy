@@ -4,6 +4,7 @@ describe TrafficSpy::ScreenResolution do
 
   before do
     TrafficSpy::DB["DELETE FROM screen_resolutions"].delete
+    TrafficSpy::DB.from(:sqlite_sequence).where(name:"screen_resolutions").delete
 
     @screen_resolutions_table = TrafficSpy::DB.from(:screen_resolutions)
   end
@@ -11,10 +12,10 @@ describe TrafficSpy::ScreenResolution do
   describe "new" do
     it "creates a new entry in the database" do
 
-      screen_resolution = described_class.new(width: 1280, height: 800)
+      screen = described_class.new(width: 1280, height: 800)
 
-      expect(screen_resolution.width).to eq 1280
-      expect(screen_resolution.height).to eq 800
+      expect(screen.width).to eq 1280
+      expect(screen.height).to eq 800
 
     end
   end
@@ -33,6 +34,21 @@ describe TrafficSpy::ScreenResolution do
       end
     end
 
+  end
+
+  describe "class methods" do
+    it "find a screen resolution by dimension" do
+      width = 1280
+      height = 800
+
+      described_class.new(width: width, height: height).save
+
+      screen = described_class.find_by_resolution width, height
+      expect(screen.width).to eq width
+      expect(screen.height).to eq height
+      expect(screen.id).to eq 1
+
+    end
   end
 
 end
