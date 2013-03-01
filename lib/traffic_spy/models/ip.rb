@@ -17,6 +17,14 @@ module TrafficSpy
     def self.data
       DB.from(:ips)
     end
+
+    def self.find_by_id id
+      Ip.new data.select.where(id: id).to_a.first
+    end
+
+    def self.find_by_address address
+     Ip.new(data.select.where(address: address).to_a.first)
+    end
   end
 
 end

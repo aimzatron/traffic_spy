@@ -32,7 +32,26 @@ describe TrafficSpy::Ip do
 
       end
     end
-
   end
+
+    describe "class methods" do
+
+      before do
+        ips = described_class.new(id: 1, address: "127.127.1.1")
+        ips.save
+      end
+
+      it "can find an ip by id" do
+        ips = TrafficSpy::Ip.find_by_id 1
+        expect(ips.id).to eq 1
+        expect(ips.address).to eq "127.127.1.1"
+      end
+
+      it "can find an ip by address" do
+        ips = TrafficSpy::Ip.find_by_address "127.127.1.1"
+        expect(ips.address).to eq "127.127.1.1"
+        expect(ips.id).to eq 1
+      end
+    end
 
 end

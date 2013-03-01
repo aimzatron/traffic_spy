@@ -32,7 +32,26 @@ describe TrafficSpy::WebBrowser do
 
       end
     end
+ end
 
+  describe "class methods" do
+
+    before do
+      web_browser = described_class.new(id:1, name: "Chrome")
+      web_browser.save
+    end
+
+    it "can find a web_browser by id" do
+      web_browser = TrafficSpy::WebBrowser.find_by_id 1
+      expect(web_browser.id).to eq 1
+      expect(web_browser.name).to eq "Chrome"
+    end
+
+    it "can find a web_browser by name" do
+      web_browser = TrafficSpy::WebBrowser.find_by_name "Chrome"
+      expect(web_browser.name).to eq "Chrome"
+      expect(web_browser.id).to eq 1
+    end
   end
 
 end

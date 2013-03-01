@@ -16,6 +16,14 @@ module TrafficSpy
     def self.data
       DB.from :web_browsers
     end
+
+    def self.find_by_id id
+      WebBrowser.new data.select.where(id: id).to_a.first
+    end
+
+    def self.find_by_name name
+     WebBrowser.new(data.select.where(name: name).to_a.first)
+    end
   end
 
 end

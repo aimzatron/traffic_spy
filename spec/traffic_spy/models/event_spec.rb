@@ -32,7 +32,28 @@ describe TrafficSpy::Event do
 
       end
     end
-
   end
+
+    describe "class methods" do
+
+      before do
+        events = described_class.new(id: 1, client_id: 1, name: "Data")
+        events.save
+      end
+
+      it "can find an event by id" do
+        events = TrafficSpy::Event.find_by_id 1
+        expect(events.id).to eq 1
+        expect(events.client_id).to eq 1
+        expect(events.name).to eq "Data"
+      end
+
+      it "can find an event by name" do
+        events = TrafficSpy::Event.find_by_name "Data"
+        expect(events.name).to eq "Data"
+        expect(events.id).to eq 1
+        expect(events.client_id).to eq 1
+      end
+    end
 
 end
