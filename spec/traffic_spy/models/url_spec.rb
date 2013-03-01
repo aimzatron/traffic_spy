@@ -35,4 +35,14 @@ describe TrafficSpy::Url do
 
   end
 
+  describe "class methods" do
+
+    it "can find a URL by id" do
+      TrafficSpy::Url.new(client_id:1, url: "http://url.com").save
+      url = TrafficSpy::Url.find_by_id 1
+      expect(url.url).to eq "http://url.com"
+      expect(url.client_id).to eq 1
+    end
+  end
+
 end

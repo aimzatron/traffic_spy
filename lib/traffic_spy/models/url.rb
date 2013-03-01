@@ -17,6 +17,10 @@ module TrafficSpy
     def self.data
       DB.from :urls
     end
+
+    def self.find_by_id id
+     Url.new(data.select.where(id:id).to_a.first)
+    end
   end
 
 end
