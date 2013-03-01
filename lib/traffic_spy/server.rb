@@ -33,8 +33,13 @@ module TrafficSpy
       elsif client_already_exists?(params[:identifier])
         halt(403, "An account already exists with this identifier")
       else
-        Client.new params[:identifier], params[:rootUrl]
-        {identifier: params[:identifier]}.to_json
+        identifier = params[:identifier]
+        root_url = params[:rootUrl]
+
+        client = Client.new(identifier: identifier, root_url: root_url)
+        client.save
+
+        {identifier: client.identifier}.to_json
       end
     end
   end

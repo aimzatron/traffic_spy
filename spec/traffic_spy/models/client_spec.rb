@@ -11,7 +11,7 @@ describe TrafficSpy::Client do
   describe "new" do
     it "creates a new client" do
 
-      client = described_class.new("id", "url")
+      client = described_class.new(identifier:"id", root_url:"url")
       expect(client.id).to be_nil
       expect(client.identifier).to eq "id"
       expect(client.root_url).to eq "url"
@@ -24,7 +24,7 @@ describe TrafficSpy::Client do
     describe "save" do
       it "adds an entry to the clients table" do
 
-      client = described_class.new("id", "url")
+      client = described_class.new(identifier:"id", root_url:"url")
       client.save
       expect(@client_table.count).to eq 1
 
