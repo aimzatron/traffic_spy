@@ -19,11 +19,13 @@ module TrafficSpy
     end
 
     def self.find_by_id id
-      Ip.new data.select.where(id: id).to_a.first
+      result = data.select.where(id: id).to_a.first
+      result.nil? ? nil : Ip.new(result)
     end
 
     def self.find_by_address address
-     Ip.new(data.select.where(address: address).to_a.first)
+     result = data.select.where(address: address).to_a.first
+     result.nil? ? nil : Ip.new(result)
     end
   end
 

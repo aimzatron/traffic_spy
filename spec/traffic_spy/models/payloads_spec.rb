@@ -6,6 +6,9 @@ describe TrafficSpy::Payload do
     delete_payloads
     delete_clients
     delete_urls
+    delete_events
+    delete_screen_resolutions
+    delete_ips
   end
 
   describe "new" do
@@ -106,11 +109,12 @@ describe TrafficSpy::Payload do
           ip:  "63.29.38.211" } 
         end
 
-      it "creates a new url object" do
-
-        clients_table.insert(root_url: "http://jumpstartlab.com",
+        before do
+          clients_table.insert(root_url: "http://jumpstartlab.com",
           identifier: "blah")
+        end
 
+      it "creates a new url object" do
 
           described_class.create(payload)
           query = urls_table.select.where url: "http://jumpstartlab.com/blog"
@@ -119,10 +123,8 @@ describe TrafficSpy::Payload do
           #new_payload = TrafficSpy::Payload.find_by_id 1
       end
 
-      it "creates a new url object" do
+      it "doesn't create a new url object" do
 
-        clients_table.insert(root_url: "http://jumpstartlab.com",
-          identifier: "blah")
         urls_table.insert(client_id: 1, url: "http://jumpstartlab.com/blog" )
         
           described_class.create(payload)
@@ -131,6 +133,71 @@ describe TrafficSpy::Payload do
 
           #new_payload = TrafficSpy::Payload.find_by_id 1
       end
+
+      it "creates a new event object" do
+
+        described_class.create(payload)
+        query = events_table.select.where name: "socialLogin"
+        expect(query.to_a).to_not be_empty
+      end
+
+      it "doesn't create a new event object" do
+        events_table.insert(client_id: 1, name: "socialLogin" )
+
+        described_class.create(payload)
+        query = events_table.select.where name: "socialLogin"
+        expect(query.to_a.size).to eq 1
+      end
+
+      it "creates a new screen resolution object" do
+
+        described_class.create(payload)
+        query = screen_resolutions_table.select.where width: 1920, height: 1280
+        expect(query.to_a).to_not be_empty
+      end
+
+      it "doesn't create a new screen resolution object" do
+        screen_resolutions_table.insert(width: 1920, height: 1280 )
+
+        described_class.create(payload)
+        query = screen_resolutions_table.select.where width: 1920, height: 1280
+        expect(query.to_a.size).to eq 1
+      end
+
+      it "creates a new ip object" do
+
+        described_class.create(payload)
+        puts ips_table.to_a
+        query = ips_table.select.where address: "63.29.38.211"
+        expect(query.to_a).to_not be_empty
+      end
+
+      it "doesn't create a new ip object" do
+        ips_table.insert(address: "63.29.38.211")
+
+        described_class.create(payload)
+        query = ips_table.select.where address: "63.29.38.211"
+        expect(query.to_a.size).to eq 1
+      end
+
+      it "creates a new web_browser object" do
+
+        described_class.create(payload)
+        puts ips_table.to_a
+        query = ips_table.select.where 
+        pending
+        #expect(query.to_a).to_not be_empty
+      end
+
+      it "doesn't create a new web_browser object" do
+        ips_table.insert(address: "63.29.38.211")
+
+        described_class.create(payload)
+        query = ips_table.select.where address: "63.29.38.211"
+        pending
+        #expect(query.to_a.size).to eq 1
+      end
+
     end
   end
 

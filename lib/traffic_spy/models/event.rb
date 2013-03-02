@@ -12,6 +12,7 @@ module TrafficSpy
 
     def save
       Event.data.insert(name: name, client_id: client_id)
+
     end
 
     def self.data
@@ -19,15 +20,23 @@ module TrafficSpy
     end
 
     def self.find_by_id id
-      Event.new data.select.where(id: id).to_a.first
+      result = data.select.where(id: id).to_a.first
+      result.nil? ? nil : Event.new(result)
     end
 
     def self.find_by_name name
-     Event.new(data.select.where(name: name).to_a.first)
+     result = data.select.where(name: name).to_a.first
+     result.nil? ? nil : Event.new(result)
     end
 
     def self.find_by_client_id client_id
-      Event.new data.select.where(client_id: client_id).to_a.first
+      result = data.select.where(client_id: client_id).to_a.first
+      result.nil? ? nil : Event.new(result)
+    end
+
+    def self.find_by params
+      result = data.select.where(params).first
+      result.nil? ? nil : Event.new(result)
     end
   end
 

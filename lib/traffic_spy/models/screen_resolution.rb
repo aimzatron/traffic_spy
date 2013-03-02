@@ -20,8 +20,8 @@ module TrafficSpy
     end
 
     def self.find_by_resolution width, height
-      result = (data.select.where(width:width, height:height).to_a.first)
-      ScreenResolution.new result
+      result = data.select.where(width:width, height:height).to_a.first
+      result.nil? ? nil : ScreenResolution.new(result)
     end
   end
 

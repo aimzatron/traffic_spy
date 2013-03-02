@@ -52,6 +52,20 @@ describe TrafficSpy::Event do
         expect(events.id).to eq 1
         expect(events.client_id).to eq 1
       end
+      
+      it "can find by anything" do
+        events = TrafficSpy::Event.find_by name:"Data"
+        expect(events.name).to eq "Data"
+        expect(events.id).to eq 1
+        expect(events.client_id).to eq 1
+      end
+
+      it "can find by anything" do
+        events = TrafficSpy::Event.find_by id:1
+        expect(events.id).to eq 1
+        expect(events.name).to eq "Data"
+        expect(events.client_id).to eq 1
+      end
     end
 
 end
