@@ -4,9 +4,7 @@ require 'spec_helper'
 describe TrafficSpy::Ip do
 
   before do
-    TrafficSpy::DB["DELETE FROM ips"].delete
-
-    @ips_table = TrafficSpy::DB.from(:ips)
+		delete_ips
   end
 
   describe "new" do
@@ -28,7 +26,7 @@ describe TrafficSpy::Ip do
 
         ip.save
 
-        expect(@ips_table.count).to eq 1
+        expect(ips_table.count).to eq 1
 
       end
     end

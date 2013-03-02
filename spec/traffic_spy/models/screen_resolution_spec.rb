@@ -3,10 +3,7 @@ require 'spec_helper'
 describe TrafficSpy::ScreenResolution do
 
   before do
-    TrafficSpy::DB["DELETE FROM screen_resolutions"].delete
-    TrafficSpy::DB.from(:sqlite_sequence).where(name:"screen_resolutions").delete
-
-    @screen_resolutions_table = TrafficSpy::DB.from(:screen_resolutions)
+    delete_screen_resolutions
   end
 
   describe "new" do
@@ -29,7 +26,7 @@ describe TrafficSpy::ScreenResolution do
 
         screen_resolution.save
 
-        expect(@screen_resolutions_table.count).to eq 1
+        expect(screen_resolutions_table.count).to eq 1
 
       end
     end

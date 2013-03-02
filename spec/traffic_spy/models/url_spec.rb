@@ -3,13 +3,7 @@ require 'spec_helper'
 describe TrafficSpy::Url do
 
   before do
-
-    @url_table = TrafficSpy::DB.from(:urls)
-  end
-
-  after do
-    TrafficSpy::DB["DELETE FROM urls"].delete
-    TrafficSpy::DB.from(:sqlite_sequence).where(name:"urls").delete
+    delete_urls
   end
 
   describe "new" do
@@ -32,7 +26,7 @@ describe TrafficSpy::Url do
 
         url.save
 
-        expect(@url_table.count).to eq 1
+        expect(urls_table.count).to eq 1
 
       end
     end

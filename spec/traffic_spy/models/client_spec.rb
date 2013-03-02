@@ -3,9 +3,7 @@ require 'spec_helper'
 describe TrafficSpy::Client do
 
   before do
-    TrafficSpy::DB["DELETE FROM clients"].delete
-
-    @client_table = TrafficSpy::DB.from(:clients)
+		delete_clients
   end
 
   describe "new" do
@@ -26,7 +24,7 @@ describe TrafficSpy::Client do
 
       client = described_class.new(identifier:"id", root_url:"url")
       client.save
-      expect(@client_table.count).to eq 1
+      expect(clients_table.count).to eq 1
 
       end
     end

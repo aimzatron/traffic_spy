@@ -3,9 +3,7 @@ require 'spec_helper'
 describe TrafficSpy::Event do
 
   before do
-    TrafficSpy::DB["DELETE FROM events"].delete
-
-    @event_table = TrafficSpy::DB.from(:events)
+		delete_events
   end
 
   describe "new" do
@@ -28,7 +26,7 @@ describe TrafficSpy::Event do
 
         event.save
 
-        expect(@event_table.count).to eq 1
+        expect(events_table.count).to eq 1
 
       end
     end

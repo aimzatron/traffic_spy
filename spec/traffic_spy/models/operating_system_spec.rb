@@ -3,9 +3,7 @@ require 'spec_helper'
 describe TrafficSpy::OperatingSystem do
 
   before do
-    TrafficSpy::DB["DELETE FROM operating_systems"].delete
-
-    @operating_systems_table = TrafficSpy::DB.from(:operating_systems)
+    delete_operating_systems
   end
 
   describe "new" do
@@ -28,7 +26,7 @@ describe TrafficSpy::OperatingSystem do
 
         operating_system.save
 
-        expect(@operating_systems_table.count).to eq 1
+        expect(operating_systems_table.count).to eq 1
 
       end
     end

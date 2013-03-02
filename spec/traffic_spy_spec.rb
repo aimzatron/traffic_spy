@@ -9,13 +9,15 @@ def app
 end
 
 describe "Traffic Spy App" do
-  include Rack::Test::Methods
+	include Rack::Test::Methods
 
-  before do
+	let(:client) { TrafficSpy::Client }
+	let(:url) { TrafficSpy::Url }
+
+	before do
     #TODO create a method for deleting
     TrafficSpy::DB["DELETE FROM clients"].delete
 
-    @client_table = TrafficSpy::DB.from(:clients)
   end
 
   describe "registration" do
@@ -41,7 +43,7 @@ describe "Traffic Spy App" do
 
     context "existing identifier" do
       it "returns a 403 Forbidden status" do
-        TrafficSpy::Client.new(identifier: "id", root_url: "url").save
+        client.new(identifier: "id", root_url: "url").save
 
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
         expect(last_response).to be_forbidden
@@ -64,7 +66,7 @@ describe "Traffic Spy App" do
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
         #TODO find out why this mock doesn't work
         #TrafficSpy::Client.should_receive(:new).with('id', 'url')
-        expect(TrafficSpy::DB.from(:clients).count).to eq 1
+        expect(clients_table.count).to eq 1
 
       end
 

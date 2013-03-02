@@ -19,3 +19,88 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+def db
+  TrafficSpy::DB
+end
+
+def clients_table
+    db.from(:clients)
+end
+
+def campaigns_table
+    db.from(:campaigns)
+end
+
+def campaign_events_table
+    db.from(:campaign_events)
+end
+
+def events_table
+    db.from(:events)
+end
+
+def ips_table
+    db.from(:ips)
+end
+
+def operating_systems_table
+    db.from(:operating_systems)
+end
+
+def screen_resolutions_table
+    db.from(:screen_resolutions)
+end
+
+def urls_table
+    db.from(:urls)
+end
+
+def web_browsers_table
+    db.from(:web_browsers)
+end
+
+def delete_urls
+    db["DELETE FROM urls"].delete
+    db.from(:sqlite_sequence).where(name:"urls").delete
+end
+
+def delete_campaign_events
+    db["DELETE FROM campaign_events"].delete
+    db.from(:sqlite_sequence).where(name:"campaign_events").delete
+end
+
+def delete_campaigns
+    db["DELETE FROM campaigns"].delete
+    db.from(:sqlite_sequence).where(name:"campaigns").delete
+end
+
+def delete_clients
+    db["DELETE FROM clients"].delete
+    db.from(:sqlite_sequence).where(name:"clients").delete
+end
+
+def delete_events
+    db["DELETE FROM events"].delete
+    db.from(:sqlite_sequence).where(name:"events").delete
+end
+
+def delete_ips
+    db["DELETE FROM ips"].delete
+    db.from(:sqlite_sequence).where(name:"ips").delete
+end
+
+def delete_operating_systems
+    db["DELETE FROM operating_systems"].delete
+    db.from(:sqlite_sequence).where(name:"operating_systems").delete
+end
+
+def delete_screen_resolutions
+    db["DELETE FROM screen_resolutions"].delete
+    db.from(:sqlite_sequence).where(name:"screen_resolutions").delete
+end
+
+def delete_web_browsers
+    db["DELETE FROM web_browsers"].delete
+    db.from(:sqlite_sequence).where(name:"web_browsers").delete
+end
