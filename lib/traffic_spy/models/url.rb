@@ -12,6 +12,7 @@ module TrafficSpy
 
     def save
       Url.data.insert(url: url, client_id: client_id)
+      Url.new Url.data.select.order(Sequel.desc(:id)).first
     end
 
     def self.data
@@ -19,12 +20,16 @@ module TrafficSpy
     end
 
     def self.find_by_id id
-      puts Url.data.select.to_a.inspect
       Url.new data.select.where(id: id).to_a.first
     end
 
     def self.find_by_url url
-     Url.new(data.select.where(url:url).to_a.first)
+      result = data.select.where(url:url).to_a.first
+      result.nil? ? nil : Url.new(result)
+    end
+
+    def request_count
+      Payload.find_all_by_url_id(id).count
     end
   end
 

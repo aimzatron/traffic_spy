@@ -63,6 +63,7 @@ module TrafficSpy
       Integer :ip_id 
       Integer :screen_resolution_id 
       Integer :os_id
+      primary_key :id
     end
 
   else

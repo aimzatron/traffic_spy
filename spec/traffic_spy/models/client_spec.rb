@@ -29,7 +29,12 @@ describe TrafficSpy::Client do
       end
     end
 
+    describe "urls" do
+      it "returns a collection of urls ordered from most requested to least requested" do
+      pending
+     end   
   end
+end
 
   describe "Class methods" do
     it "finds a client by identifier" do
@@ -38,7 +43,16 @@ describe TrafficSpy::Client do
       expect(client.id).to eq 1
       expect(client.root_url).to eq "http://url.com"
     end
+
+     it "finds a client by url" do
+      described_class.new(identifier:"ident", root_url:"http://url.com").save
+      client = described_class.find_by_root_url "http://url.com"
+      expect(client.id).to eq 1
+      expect(client.root_url).to eq "http://url.com"
+    end
   end
+
+
 
 
 end

@@ -48,6 +48,10 @@ def operating_systems_table
     db.from(:operating_systems)
 end
 
+def payloads_table
+    db.from(:payloads)
+end
+
 def screen_resolutions_table
     db.from(:screen_resolutions)
 end
@@ -93,6 +97,11 @@ end
 def delete_operating_systems
     db["DELETE FROM operating_systems"].delete
     db.from(:sqlite_sequence).where(name:"operating_systems").delete
+end
+
+def delete_payloads
+    db["DELETE FROM payloads"].delete
+    db.from(:sqlite_sequence).where(name:"payloads").delete
 end
 
 def delete_screen_resolutions

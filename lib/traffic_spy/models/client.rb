@@ -28,6 +28,10 @@ module TrafficSpy
       Client.new data.select.where(identifier: identifier).to_a.first
     end
 
+    def self.find_by_root_url url
+      Client.new data.select.where(root_url: url).to_a.first
+    end
+
   end
 
 end

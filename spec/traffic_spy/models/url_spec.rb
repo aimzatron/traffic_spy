@@ -30,7 +30,15 @@ describe TrafficSpy::Url do
 
       end
     end
-
+    
+    describe "request count" do
+      it "returns a count of number of URL requests" do
+        # payload = TrafficSpy::Payload.new {}
+        # url = described_class.new(url: "url", client_id: 4)
+        pending
+        # expect(url.request_count).to eq 3
+      end
+    end
   end
 
   describe "class methods" do
