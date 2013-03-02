@@ -14,13 +14,13 @@ describe TrafficSpy::Payload do
   describe "new" do
     it "creates a new entry in the database" do
 
-      payloads = described_class.new(browser_id: 1, 
-                                      event_id: 1, 
-                                      response_time: 1, 
-                                      request_time: 1, 
-                                      url_id: 1, 
-                                      ip_id: 1, 
-                                      screen_resolution_id: 1, 
+      payloads = described_class.new(browser_id: 1,
+                                      event_id: 1,
+                                      response_time: 1,
+                                      request_time: 1,
+                                      url_id: 1,
+                                      ip_id: 1,
+                                      screen_resolution_id: 1,
                                       os_id: 1)
 
       expect(payloads.browser_id).to eq 1
@@ -36,33 +36,33 @@ describe TrafficSpy::Payload do
   describe "find all by url"
     it "finds all by url" do
 
-      payloads = described_class.new(browser_id: 1, 
-                                      event_id: 1, 
-                                      response_time: 1, 
-                                      request_time: 1, 
-                                      url_id: 1, 
-                                      ip_id: 1, 
-                                      screen_resolution_id: 1, 
+      payloads = described_class.new(browser_id: 1,
+                                      event_id: 1,
+                                      response_time: 1,
+                                      request_time: 1,
+                                      url_id: 1,
+                                      ip_id: 1,
+                                      screen_resolution_id: 1,
                                       os_id: 1)
       payloads.save
 
-      payloads = described_class.new(browser_id: 1, 
-                                      event_id: 1, 
-                                      response_time: 1, 
-                                      request_time: 1, 
-                                      url_id: 1, 
-                                      ip_id: 1, 
-                                      screen_resolution_id: 1, 
+      payloads = described_class.new(browser_id: 1,
+                                      event_id: 1,
+                                      response_time: 1,
+                                      request_time: 1,
+                                      url_id: 1,
+                                      ip_id: 1,
+                                      screen_resolution_id: 1,
                                       os_id: 1)
       payloads.save
 
-      payloads = described_class.new(browser_id: 1, 
-                                      event_id: 1, 
-                                      response_time: 1, 
-                                      request_time: 1, 
-                                      url_id: 2, 
-                                      ip_id: 1, 
-                                      screen_resolution_id: 1, 
+      payloads = described_class.new(browser_id: 1,
+                                      event_id: 1,
+                                      response_time: 1,
+                                      request_time: 1,
+                                      url_id: 2,
+                                      ip_id: 1,
+                                      screen_resolution_id: 1,
                                       os_id: 1)
       payloads.save
 
@@ -77,13 +77,13 @@ describe TrafficSpy::Payload do
     describe "save" do
       it "adds an entry to the payloads table" do
 
-        payloads = described_class.new(browser_id: 1, 
-                                      event_id: 1, 
-                                      response_time: 1, 
-                                      request_time: 1, 
-                                      url_id: 1, 
-                                      ip_id: 1, 
-                                      screen_resolution_id: 1, 
+        payloads = described_class.new(browser_id: 1,
+                                      event_id: 1,
+                                      response_time: 1,
+                                      request_time: 1,
+                                      url_id: 1,
+                                      ip_id: 1,
+                                      screen_resolution_id: 1,
                                       os_id: 1)
 
         payloads.save
@@ -95,7 +95,7 @@ describe TrafficSpy::Payload do
 
     describe "create payload" do
 
-      let(:payload) do 
+      let(:payload) do
         { url: "http://jumpstartlab.com/blog",
           requestedAt: "2013-02-16 21:38:28 -0700",
           respondedIn:  37,
@@ -106,7 +106,7 @@ describe TrafficSpy::Payload do
           userAgent:  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
           resolutionWidth:  "1920",
           resolutionHeight:  "1280",
-          ip:  "63.29.38.211" } 
+          ip:  "63.29.38.211" }
         end
 
         before do
@@ -126,7 +126,7 @@ describe TrafficSpy::Payload do
       it "doesn't create a new url object" do
 
         urls_table.insert(client_id: 1, url: "http://jumpstartlab.com/blog" )
-        
+
           described_class.create(payload)
           query = urls_table.select.where url: "http://jumpstartlab.com/blog"
           expect(query.to_a.size).to eq 1
@@ -184,7 +184,7 @@ describe TrafficSpy::Payload do
 
         described_class.create(payload)
         puts ips_table.to_a
-        query = ips_table.select.where 
+        query = ips_table.select.where
         pending
         #expect(query.to_a).to_not be_empty
       end
@@ -194,7 +194,6 @@ describe TrafficSpy::Payload do
 
         described_class.create(payload)
         query = ips_table.select.where address: "63.29.38.211"
-        pending
         #expect(query.to_a.size).to eq 1
       end
 
