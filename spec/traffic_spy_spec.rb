@@ -17,6 +17,14 @@ describe "Traffic Spy App" do
 	before do
     #TODO create a method for deleting
     TrafficSpy::DB["DELETE FROM clients"].delete
+    delete_clients
+    delete_payloads
+    delete_urls
+    delete_web_browsers
+    delete_screen_resolutions
+    delete_events
+    delete_operating_systems
+    delete_ips
 
   end
 
@@ -82,6 +90,25 @@ describe "Traffic Spy App" do
 
   describe "processing requests" do
 
+    let(:payload) do
+      { url:"http://jumpstartlab.com/blog",
+        requestedAt:"2013-02-16 21:38:28 -0700",
+        respondedIn:37,
+        referredBy:"http://jumpstartlab.com",
+        requestType:"GET",
+        parameters:[],
+        eventName: "socialLogin",
+        userAgent:"Mozilla/5.0 (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+        resolutionWidth:"1920",
+        resolutionHeight:"1280",
+        ip:"63.29.38.211" }.to_json
+    end
+
+    let(:insert_client) do
+       clients_table.insert(root_url: "http://jumpstartlab.com",
+                             identifier: "jumpstartlab")
+    end
+
     context "missing payload" do
       it "returns a 400 Bad Request" do
         post '/sources/IDENTIFIER/data'
@@ -95,36 +122,40 @@ describe "Traffic Spy App" do
 
     context "unique payload" do
 
-        let(:payload) do 
-          { url:"http://jumpstartlab.com/blog",
-          requestedAt:"2013-02-16 21:38:28 -0700",
-          respondedIn:37,
-          referredBy:"http://jumpstartlab.com",
-          requestType:"GET",
-          parameters:[],
-          eventName: "socialLogin",
-          userAgent:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-          resolutionWidth:"1920",
-          resolutionHeight:"1280",
-          ip:"63.29.38.211" }.to_json
-        end
-
+      before {insert_client}
 
       it "returns a 200 ok status" do
         post '/sources/indentifier/data', {payload: payload}
-        # expect(last_response).to be_ok
-        pending
+        expect(last_response).to be_ok
       end
 
-      it "adds the URL to the database" do
-        # post '/sources/indentifier/data', {payload: payload}
-        # expect(TrafficSpy::Url.find_by_id 1).to_not be_nil
-        # expect(TrafficSpy::Url.find_by_id(1).url).to eq payload[:url]
-        pending
+      it "adds the payload to the database" do
+        post '/sources/indentifier/data', {payload: payload}
+
+        expect(payloads_table.count).to eq 1
+      end
+    end
+
+    context "duplicate payload" do
+
+      before {insert_client}
+
+      it "returns a 403 forbidden status" do
+        post '/sources/indentifier/data', {payload: payload}
+        post '/sources/indentifier/data', {payload: payload}
+
+        expect(last_response).to be_forbidden
       end
 
-      #3. post
-      #4. check ALL THE THINGS )(one at a time)
+      it "does not add a new entry to the db" do
+        post '/sources/indentifier/data', {payload: payload}
+        post '/sources/indentifier/data', {payload: payload}
+
+        expect(payloads_table.count).to eq 1
+
+      end
+
+
     end
 
   end

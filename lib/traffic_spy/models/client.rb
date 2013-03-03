@@ -19,18 +19,22 @@ module TrafficSpy
     end
 
     def urls
-      urls = URL.find_by_client_id id
-      #DB.from(:urls).where(client_id:id)
-      # SELECT * FROM
-      urls.sort_by{|url| url.requests.size}
+      query_string = "SELECT urls.id, urls.url FROM urls JOIN payloads ON urls.id = payloads.url_id GROUP BY urls.id ORDER BY count(urls.id) desc"
+      results = DB.fetch(query_string).to_a
+
+      results.collect{|url_hash| Url.new url_hash}
+
+
     end
 
     def self.find_by_identifier identifier
-      Client.new data.select.where(identifier: identifier).to_a.first
+      result = data.select.where(identifier: identifier).first
+      Client.new result unless result.nil?
     end
 
     def self.find_by_root_url url
-      Client.new data.select.where(root_url: url).to_a.first
+      result = data.select.where(root_url: url).first
+      Client.new result unless result.nil?
     end
 
   end
