@@ -10,7 +10,8 @@ module TrafficSpy
     end
 
     def save
-      WebBrowser.data.insert(name: name)
+     id = WebBrowser.data.insert(name: name)
+      WebBrowser.new WebBrowser.data.where(id: id).first
     end
 
     def self.data
@@ -22,7 +23,8 @@ module TrafficSpy
     end
 
     def self.find_by_name name
-     WebBrowser.new(data.select.where(name: name).to_a.first)
+     result = data.select.where(name: name).to_a.first
+     result.nil? ? nil : WebBrowser.new(result)
     end
   end
 

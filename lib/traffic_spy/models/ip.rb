@@ -11,7 +11,8 @@ module TrafficSpy
     end
 
     def save
-      Ip.data.insert(address: address)
+      id = Ip.data.insert(address: address)
+      Ip.new Ip.data.where(id: id).first
     end
 
     def self.data

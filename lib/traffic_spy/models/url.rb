@@ -11,8 +11,8 @@ module TrafficSpy
     end
 
     def save
-      Url.data.insert(url: url, client_id: client_id)
-      Url.new Url.data.select.order(Sequel.desc(:id)).first
+      id = Url.data.insert(url: url, client_id: client_id)
+      Url.new Url.data.where(id: id).first
     end
 
     def self.data

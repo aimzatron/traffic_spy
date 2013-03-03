@@ -14,7 +14,8 @@ module TrafficSpy
     end
 
     def save
-      Client.data.insert(identifier: identifier, root_url: root_url)
+      id = Client.data.insert(identifier: identifier, root_url: root_url)
+      Client.new Client.data.where(id:id).first
     end
 
     def urls

@@ -12,7 +12,8 @@ module TrafficSpy
     end
 
     def save
-      ScreenResolution.data.insert(width: width, height: height)
+      id = ScreenResolution.data.insert(width: width, height: height)
+      ScreenResolution.new ScreenResolution.data.where(id: id).first
     end
 
     def self.data

@@ -12,6 +12,7 @@ module TrafficSpy
 
     def save
       Event.data.insert(name: name, client_id: client_id)
+      Event.new Event.data.select.order(Sequel.desc(:id)).first
 
     end
 

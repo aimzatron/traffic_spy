@@ -10,11 +10,22 @@ module TrafficSpy
     end
 
     def save
-      OperatingSystem.data.insert(name: name)
+     id = OperatingSystem.data.insert(name: name)
+      OperatingSystem.new OperatingSystem.data.where(id: id).first
     end
 
     def self.data
       DB.from :operating_systems
+    end
+
+    def self.find_by_id id
+     result = OperatingSystem.data.where(id: id).first
+     result.nil? ? nil : OperatingSystem.new(result)
+    end
+
+    def self.find_by_name name
+     result = OperatingSystem.data.where(name: name).first
+     result.nil? ? nil : OperatingSystem.new(result)
     end
   end
 
