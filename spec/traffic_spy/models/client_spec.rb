@@ -5,6 +5,11 @@ describe TrafficSpy::Client do
   before do
     delete_clients
     delete_urls
+    delete_web_browsers
+    delete_payloads
+    delete_operating_systems
+    delete_screen_resolutions
+    delete_events
   end
 
   describe "new" do
@@ -22,6 +27,10 @@ describe TrafficSpy::Client do
 
     let(:client) do
       described_class.new identifier: "mock_client", root_url: "http://jumpstartlab.com"
+    end
+
+    let(:client2) do
+      described_class.new identifier: "mock_client2", root_url: "http://jumpstartlab2.com"
     end
 
     context "save" do
@@ -55,6 +64,30 @@ describe TrafficSpy::Client do
         TrafficSpy::Payload.create(params).save
       end
 
+      it "urls returns a collection of events associated with the identifier" do
+
+        saved_client = client.save
+        client2.save
+
+        add_dummy_payload(eventName: "event1")
+        add_dummy_payload(eventName: "event1",
+                          respondedIn: 2)
+        add_dummy_payload(eventName: "event2")
+        add_dummy_payload(eventName: "event2",
+                          respondedIn: 2)
+        add_dummy_payload(eventName: "event3",
+                          respondedIn: 2,
+                          referredBy: "http://jumpstartlab2.com")
+
+        events = saved_client.events
+        expect(events.size).to eq 2
+        events.each do |event|
+          match = /event[12]/.match(event.name)
+          expect(match.to_a).to_not be_empty
+        end
+
+      end
+
       it "urls returns a collection of urls associated with the identifier, sorted from most visits to least visits" do
 
         client.save
@@ -78,7 +111,110 @@ describe TrafficSpy::Client do
         expect(urls[1].url).to eq "http://jumpstartlab.com/url1"
         expect(urls[2].url).to eq "http://jumpstartlab.com/url3"
 
+        pending "Need to add get realtive path method to url model"
       end
+
+      it "returns web browser breakdown across all requests" do
+        saved_client = client.save
+        client2.save
+
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 2,
+                          userAgent:"chrome (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url2",
+                          respondedIn: 2,
+                          userAgent:"chrome (windows) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 3,
+                          userAgent:"chrome (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url2",
+                          respondedIn: 3,
+                          userAgent:"chrome (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 2,
+                          userAgent:"safari (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 3,
+                          userAgent:"safari (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab2.com/url1",
+                          referredBy: "http://jumpstartlab2.com",
+                          respondedIn: 3,
+                          userAgent:"safari (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+
+        browsers = saved_client.web_browsers
+        expect(browsers.size).to eq 2
+
+        expect(browsers["chrome"]).to eq 4
+        expect(browsers["safari"]).to eq 2
+      end
+
+      it "returns operating system breakdown across all requests" do
+        saved_client = client.save
+        client2.save
+
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 2,
+                          userAgent:"chrome (mac) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url2",
+                          respondedIn: 2,
+                          userAgent:"chrome (windows) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 3,
+                          userAgent:"chrome (mac) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url2",
+                          respondedIn: 3,
+                          userAgent:"chrome (windows) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 2,
+                          userAgent:"safari (mac) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab.com/url1",
+                          respondedIn: 3,
+                          userAgent:"safari (linux) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+        add_dummy_payload(url: "http://jumpstartlab2.com/url1",
+                          referredBy: "http://jumpstartlab2.com",
+                          respondedIn: 3,
+                          userAgent:"safari (windows) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17")
+
+        os = saved_client.operating_systems
+        expect(os.size).to eq 3
+
+        expect(os["mac"]).to eq 3
+        expect(os["windows"]).to eq 2
+        expect(os["linux"]).to eq 1
+      end
+
+      it "returns screen resolution breakdown across all requests" do
+        saved_client = client.save
+
+        add_dummy_payload(respondedIn: "1920",
+                          resolutionHeight: "1280")
+        add_dummy_payload(resolutionWidth: "100",
+                          resolutionHeight: "200",
+                          url: "http://jumpstartlab.com/url1")
+        add_dummy_payload(resolutionWidth: "100",
+                          resolutionHeight: "200",
+                          respondedIn:1,
+                          url: "http://jumpstartlab.com/url1")
+        add_dummy_payload(resolutionWidth: "1680",
+                          resolutionHeight: "1520")
+        add_dummy_payload(resolutionWidth: "1680",
+                          resolutionHeight: "1520",
+                          url: "http://jumpstartlab.com/url1")
+
+        screen_resolution = saved_client.screen_resolutions
+        expect(screen_resolution.size).to eq 3
+        expect(screen_resolution["1920x1280"]).to eq 1
+        expect(screen_resolution["1680x1520"]).to eq 2
+        expect(screen_resolution["100x200"]).to eq 2
+      end
+
+      it "returns the longest, average response time per URL to shortest" do
+        pending "waiting on URLs"
+      end
+
+
     end
 
   end
