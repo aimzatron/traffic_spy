@@ -62,6 +62,21 @@ module TrafficSpy
 
     end
 
+    def identifier_does_not_exist(params)
+      params[:identifier].nil?
+    end
+
+
+    post'/sources/:identifier/urls/data' do
+      if identifier_does_not_exist(params)
+        halt 400, "Ruh-Roh. Request is incomplete. Identifier does not exist."
+      end
+    end
+
+
+    def save identifier, payload
+      client = Client.find_by_identifier identifier
+>>>>>>> 6d0995abb93924a0cac8efaeb4753ac52092b9c6
 
     def parse_request payload_string
       payload = JSON.parse payload_string
@@ -70,6 +85,19 @@ module TrafficSpy
       end
 
     end
+<<<<<<< HEAD
   end
 
+    def event_not_defined(params)
+      params[:event_id].nil?
+    end
+
+    post '/sources/IDENTIFIER/events/data' do
+      if event_not_defined(params)
+        halt 400, "Oh shiz. Request is incomplete. Event not defined."
+      end
+    end
+
+
+  end
 end
