@@ -28,10 +28,6 @@ module TrafficSpy
       result.nil? ? nil : Url.new(result)
     end
 
-    def request_count
-      Payload.find_all_by_url_id(id).count
-    end
-
     def payload_data
       DB.from :payloads_table
     end

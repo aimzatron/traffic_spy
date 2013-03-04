@@ -35,43 +35,6 @@ describe TrafficSpy::Payload do
       expect(payloads.os_id).to eq 1
 
     end
-    describe "find all by url"
-    it "finds all by url" do
-
-      payloads = described_class.new(browser_id: 1,
-                                     event_id: 1,
-                                     response_time: 1,
-                                     request_time: 1,
-                                     url_id: 1,
-                                     ip_id: 1,
-                                     screen_resolution_id: 1,
-                                     os_id: 1)
-      payloads.save
-
-      payloads = described_class.new(browser_id: 1,
-                                     event_id: 1,
-                                     response_time: 1,
-                                     request_time: 1,
-                                     url_id: 1,
-                                     ip_id: 1,
-                                     screen_resolution_id: 1,
-                                     os_id: 1)
-      payloads.save
-
-      payloads = described_class.new(browser_id: 1,
-                                     event_id: 1,
-                                     response_time: 1,
-                                     request_time: 1,
-                                     url_id: 2,
-                                     ip_id: 1,
-                                     screen_resolution_id: 1,
-                                     os_id: 1)
-      payloads.save
-
-      # expect(described_class.find_all_by_url_id(1).count).to eq 2
-      # expect(described_class.find_all_by_url_id(1))
-      pending
-    end
   end
 
   describe "instance methods" do
@@ -237,6 +200,7 @@ describe TrafficSpy::Payload do
 
       it "save a new payload" do
         new_payload = described_class.create(payload)
+
 
         request_time = DateTime.parse payload[:requestedAt]
 
