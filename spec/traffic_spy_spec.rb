@@ -9,14 +9,12 @@ def app
 end
 
 describe "Traffic Spy App" do
-	include Rack::Test::Methods
+  include Rack::Test::Methods
 
-	let(:client) { TrafficSpy::Client }
-	let(:url) { TrafficSpy::Url }
+  let(:client) { TrafficSpy::Client }
+  let(:url) { TrafficSpy::Url }
 
-	before do
-    #TODO create a method for deleting
-    TrafficSpy::DB["DELETE FROM clients"].delete
+  before do
     delete_clients
     delete_payloads
     delete_urls
@@ -105,8 +103,8 @@ describe "Traffic Spy App" do
     end
 
     let(:insert_client) do
-       clients_table.insert(root_url: "http://jumpstartlab.com",
-                             identifier: "jumpstartlab")
+      clients_table.insert(root_url: "http://jumpstartlab.com",
+                           identifier: "jumpstartlab")
     end
 
     context "missing payload" do
@@ -122,7 +120,9 @@ describe "Traffic Spy App" do
 
     context "unique payload" do
 
-      before {insert_client}
+      before do
+        insert_client
+      end
 
       it "returns a 200 ok status" do
         post '/sources/indentifier/data', {payload: payload}
@@ -155,45 +155,45 @@ describe "Traffic Spy App" do
 
       end
 
-  end
+    end
 
-  describe "url statistics" do
+    describe "url statistics" do
 
-    context "identifier does not exist" do
-      it "returns a message that the URL hasn't been requested" do
-        post '/sources/IDENTIFIER/urls/data'
-        expect(last_response).to_not be_empty
+      context "identifier does not exist" do
+        it "returns a message that the URL hasn't been requested" do
+          post '/sources/IDENTIFIER/urls/data'
+          expect(last_response).to_not be_empty
+        end
+      end
+
+      context "identifier exists" do
+        it "returns a query of longest response time to shortest" do
+          post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+          expect(TrafficSpy::Url.response_query).to_not be_nil
+          # pending
+        end
+      end
+
+      context "identifier exists" do
+        it "returns a query of the average length of response time per url" do
+          post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+          expect(TrafficSpy::Url.average_response_time).to_not be_nil
+          # pending
+        end
+      end
+
+    end
+
+    describe "application details" do
+
+      it "displays a message when the identifier does not exist" do
+
+        get 'sources/non_exisitent_identifier'
+
+        pending "need to finish this.."
       end
     end
-
-    context "identifier exists" do
-       it "returns a query of longest response time to shortest" do
-         post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
-         expect(TrafficSpy::Url.response_query).to_not be_nil
-        # pending
-      end
-    end
-
-    context "identifier exists" do
-       it "returns a query of the average length of response time per url" do
-         post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
-         expect(TrafficSpy::Url.average_response_time).to_not be_nil
-        # pending
-      end
-    end
-
   end
-
-  describe "application details" do
-
-    it "displays a message when the identifier does not exist" do
-
-      get 'sources/non_exisitent_identifier'
-
-      pending "need to finish this.."
-    end
-  end
-end
 
   describe "application events" do
 
@@ -208,8 +208,8 @@ end
       it "returns a message that no events have been defined" do
         post '/sources/IDENTIFIER/events/data'
         expect(last_response).to_not be_empty
-        end
       end
+    end
   end
 
 end

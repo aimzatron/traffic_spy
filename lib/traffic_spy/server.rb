@@ -52,7 +52,10 @@ module TrafficSpy
         halt 400, "Request is incomplete. Missing payload."
       end
 
-      payload = Payload.create (parse_request params[:payload])
+
+      request = parse_request(params[:payload])
+
+      payload = TrafficSpy::Payload.create(parse_request(params[:payload]))
 
       if payload.exists?
         halt 403, "Received a duplicate request"
@@ -76,15 +79,11 @@ module TrafficSpy
 
     def save identifier, payload
       client = Client.find_by_identifier identifier
+    end
 
     def parse_request payload_string
-      payload = JSON.parse payload_string
-      payload.each_with_object({}) do |(key, value), hash|
-        hash[key.to_sym] = value
-      end
-
+     JSON.parse payload_string, symbolize_names: true
     end
-  end
 
     def event_not_defined(params)
       params[:event_id].nil?

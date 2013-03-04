@@ -20,6 +20,7 @@ module TrafficSpy
       @ip_id = params[:ip_id]
       @screen_resolution_id = params[:screen_resolution_id]
       @os_id = params[:os_id]
+
     end
 
     def save
@@ -39,7 +40,6 @@ module TrafficSpy
     end
 
     def exists?
-
       Payload.data.where(
         browser_id: browser_id,
         event_id: event_id,
@@ -56,6 +56,8 @@ module TrafficSpy
     def self.create(params)
 
       client = Client.find_by_root_url params[:referredBy]
+
+
       url = get_url params[:url], client
       event = get_event params[:eventName], client
 
@@ -67,6 +69,7 @@ module TrafficSpy
       browser = get_browser parse_browser(params[:userAgent])
       os = get_os parse_os(params[:userAgent])
 
+
       Payload.new(
         browser_id: browser.id,
         event_id: event.id,
@@ -77,8 +80,6 @@ module TrafficSpy
         response_time: params[:respondedIn].to_i,
         request_time: DateTime.parse(params[:requestedAt]),
       )
-
-
 
     end
 
