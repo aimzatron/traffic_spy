@@ -34,7 +34,7 @@ module TrafficSpy
 
     def payload_data
       DB.from :payloads_table
-    end 
+    end
 
     def self.response_query
       DB.execute("SELECT *
@@ -45,7 +45,6 @@ module TrafficSpy
     end
 
     def self.average_response_time
-      puts "average_response_time"
       average = DB.execute("SELECT *
       FROM payloads
       JOIN urls
@@ -56,12 +55,11 @@ module TrafficSpy
 
       query = DB.fetch(average)
       result = query.to_s
-      puts result.inspect
 
-      query.to_s
+      result
 
     end
-    
+
   end
 
 end

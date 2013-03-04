@@ -31,7 +31,7 @@ describe TrafficSpy::Url do
       end
     end
 
-    describe "request response time" do 
+    describe "request response time" do
       it "returns a descending list of response times" do
         url = described_class.new(url: "url", response_time: "1")
 
@@ -48,7 +48,7 @@ describe TrafficSpy::Url do
         expect(urls_table.count).to eq 1
       end
     end
-    
+
     describe "request count" do
       it "returns a count of number of URL requests" do
         # payload = TrafficSpy::Payload.new {}

@@ -19,10 +19,15 @@ module TrafficSpy
     end
 
     def urls
-      query_string = "SELECT urls.id, urls.url FROM urls JOIN payloads ON urls.id = payloads.url_id GROUP BY urls.id ORDER BY count(urls.id) desc"
+      query_string = %Q{SELECT urls.id, urls.url
+      FROM urls
+      JOIN payloads ON urls.id = payloads.url_id
+      GROUP BY urls.id
+      ORDER BY count(urls.id) desc}
+
       results = DB.fetch(query_string).to_a
 
-      results.collect{|url_hash| Url.new url_hash}
+      results = results.collect{|url_hash| Url.new url_hash}
 
 
     end

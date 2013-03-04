@@ -64,7 +64,7 @@ describe TrafficSpy::Client do
         TrafficSpy::Payload.create(params).save
       end
 
-      it "urls returns a collection of events associated with the identifier" do
+      it "returns a collection of events associated with the identifier" do
 
         saved_client = client.save
         client2.save
@@ -88,7 +88,7 @@ describe TrafficSpy::Client do
 
       end
 
-      it "urls returns a collection of urls associated with the identifier, sorted from most visits to least visits" do
+      it "returns a collection of urls associated with the identifier, sorted from most visits to least visits" do
 
         client.save
 
@@ -110,8 +110,6 @@ describe TrafficSpy::Client do
         expect(urls[0].url).to eq "http://jumpstartlab.com/url2"
         expect(urls[1].url).to eq "http://jumpstartlab.com/url1"
         expect(urls[2].url).to eq "http://jumpstartlab.com/url3"
-
-        pending "Need to add get realtive path method to url model"
       end
 
       it "returns web browser breakdown across all requests" do
@@ -209,11 +207,6 @@ describe TrafficSpy::Client do
         expect(screen_resolution["1680x1520"]).to eq 2
         expect(screen_resolution["100x200"]).to eq 2
       end
-
-      it "returns the longest, average response time per URL to shortest" do
-        pending "waiting on URLs"
-      end
-
 
     end
 

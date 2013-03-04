@@ -49,8 +49,7 @@ describe "Traffic Spy App" do
 
     context "existing identifier" do
       it "returns a 403 Forbidden status" do
-        client.new(identifier: "id", root_url: "url").save
-
+        post '/sources', params = {identifier: 'id', rootUrl:'url'}
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
         expect(last_response).to be_forbidden
       end

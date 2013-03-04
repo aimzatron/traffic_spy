@@ -3,7 +3,7 @@ module TrafficSpy
     set :view, 'lib/views'
 
     get '/' do
-      erb :index
+#      erb :index
     end
 
     not_found do
@@ -39,15 +39,20 @@ module TrafficSpy
         client = Client.new(identifier: identifier, root_url: root_url)
         client.save
 
+
         {identifier: client.identifier}.to_json
       end
+    end
+
+    get '/sources/:identifier' do
+      'you need a test for this'
     end
 
     def missing_required_payload?(params)
       params[:payload].nil?
     end
 
-    post '/sources/:identifier/data' do
+    get '/sources/:identifier/data' do
       if missing_required_payload?(params)
         halt 400, "Request is incomplete. Missing payload."
       end
@@ -70,7 +75,7 @@ module TrafficSpy
     end
 
 
-    post'/sources/:identifier/urls/data' do
+    get '/sources/:identifier/urls' do
       if identifier_does_not_exist(params)
         halt 400, "Ruh-Roh. Request is incomplete. Identifier does not exist."
       end
@@ -88,13 +93,6 @@ module TrafficSpy
     def event_not_defined(params)
       params[:event_id].nil?
     end
-
-    post '/sources/IDENTIFIER/events/data' do
-      if event_not_defined(params)
-        halt 400, "Oh shiz. Request is incomplete. Event not defined."
-      end
-    end
-
 
   end
 end
