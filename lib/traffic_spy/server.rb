@@ -76,7 +76,6 @@ module TrafficSpy
 
     def save identifier, payload
       client = Client.find_by_identifier identifier
->>>>>>> 6d0995abb93924a0cac8efaeb4753ac52092b9c6
 
     def parse_request payload_string
       payload = JSON.parse payload_string
@@ -85,7 +84,6 @@ module TrafficSpy
       end
 
     end
-<<<<<<< HEAD
   end
 
     def event_not_defined(params)
