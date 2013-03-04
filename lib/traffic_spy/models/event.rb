@@ -39,6 +39,17 @@ module TrafficSpy
       result = data.select.where(params).first
       result.nil? ? nil : Event.new(result)
     end
+
+    def self.events_received  
+      DB.execute("SELECT *
+      FROM payloads
+      JOIN events
+      ON payloads.event_id = events.id;
+      GROUP BY event_id
+      ORDER BY count(event_id)")
+
+      puts self.events_received
+    end
   end
 
 end
