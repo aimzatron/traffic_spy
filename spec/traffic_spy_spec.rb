@@ -156,41 +156,42 @@ describe "Traffic Spy App" do
 
     end
 
-    describe "url statistics" do
+  end
 
-      context "identifier does not exist" do
-        it "returns a message that the URL hasn't been requested" do
-          post '/sources/IDENTIFIER/urls/data'
-          expect(last_response).to_not be_empty
-        end
+  describe "url statistics" do
+
+    context "identifier does not exist" do
+      it "returns a message that the URL hasn't been requested" do
+        post '/sources/IDENTIFIER/urls/data'
+        expect(last_response).to_not be_empty
       end
-
-      context "identifier exists" do
-        it "returns a query of longest response time to shortest" do
-          post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
-          expect(TrafficSpy::Url.response_query).to_not be_nil
-          # pending
-        end
-      end
-
-      context "identifier exists" do
-        it "returns a query of the average length of response time per url" do
-          post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
-          expect(TrafficSpy::Url.average_response_time).to_not be_nil
-          # pending
-        end
-      end
-
     end
 
-    describe "application details" do
-
-      it "displays a message when the identifier does not exist" do
-
-        get 'sources/non_exisitent_identifier'
-
-        pending "need to finish this.."
+    context "identifier exists" do
+      it "returns a query of longest response time to shortest" do
+        post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+        expect(TrafficSpy::Url.response_query).to_not be_nil
+        # pending
       end
+    end
+
+    context "identifier exists" do
+      it "returns a query of the average length of response time per url" do
+        post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+        expect(TrafficSpy::Url.average_response_time).to_not be_nil
+        # pending
+      end
+    end
+
+  end
+
+  describe "application details" do
+
+    it "displays a message when the identifier does not exist" do
+
+      get 'sources/non_exisitent_identifier'
+
+      pending "need to finish this.."
     end
   end
 
@@ -204,21 +205,27 @@ describe "Traffic Spy App" do
     end
 
     context "event does not exist" do
+
       it "returns a message that no events have been defined" do
         post '/sources/:identifier/events/data'
         expect(last_response).to_not be_empty
       end
+
     end
 
   end
 
   describe "application event details" do
+
     context "event name exists" do
+
       it "returns breakdown hour by hour of when the event was received" do
         post '/sources/:identifier/events/:name'
         expect(last_response).to_not be_empty
       end
+
     end
+
   end
 
 end
