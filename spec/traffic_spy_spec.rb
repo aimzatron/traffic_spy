@@ -155,7 +155,31 @@ describe "Traffic Spy App" do
 
       end
 
+  end
 
+  describe "url statistics" do
+
+    context "identifier does not exist" do
+      it "returns a message that the URL hasn't been requested" do
+        post '/sources/IDENTIFIER/urls/data'
+        expect(last_response).to_not be_empty
+      end
+    end
+
+    context "identifier exists" do
+       it "returns a query of longest response time to shortest" do
+         post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+         expect(TrafficSpy::Url.response_query).to_not be_nil
+        # pending
+      end
+    end
+
+    context "identifier exists" do
+       it "returns a query of the average length of response time per url" do
+         post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+         expect(TrafficSpy::Url.average_response_time).to_not be_nil
+        # pending
+      end
     end
 
   end
@@ -171,4 +195,22 @@ describe "Traffic Spy App" do
   end
 end
 
+  describe "application events" do
 
+    context "event exists" do
+      it "returns a query of events by event_id in order of receipt amt" do
+        post '/sources/IDENTIFIER/events'
+        expect(TrafficSpy::Event.events_received).to_not be_nil
+      end
+    end
+
+    context "event does not exist" do
+      it "returns a message that no events have been defined" do
+        post '/sources/IDENTIFIER/events/data'
+        expect(last_response).to_not be_empty
+        end
+      end
+  end
+
+end
+end
