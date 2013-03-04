@@ -10,13 +10,8 @@ module TrafficSpy
       erb :error
     end
 
-    def missing_required_source_params?(params)
-      params[:identifier].nil? || params[:rootUrl].nil?
-    end
-
-    def client_already_exists?(identifier)
-      # TOOD: Client.exists?(identifier)
-      !DB.from(:clients).select.where(identifier: identifier).empty?
+    get '/sources/:identifier' do
+      'you need a test for this'
     end
 
     post '/sources' do
@@ -41,15 +36,7 @@ module TrafficSpy
       end
     end
 
-    get '/sources/:identifier' do
-      'you need a test for this'
-    end
-
-    def missing_required_payload?(params)
-      params[:payload].nil?
-    end
-
-    get '/sources/:identifier/data' do
+    post '/sources/:identifier/data' do
       if missing_required_payload?(params)
         halt 400, "Request is incomplete. Missing payload."
       end
@@ -66,15 +53,39 @@ module TrafficSpy
 
     end
 
-    def identifier_does_not_exist(params)
-      params[:identifier].nil?
-    end
-
-
     post'/sources/:identifier/urls' do
       if identifier_does_not_exist(params)
         halt 400, "Ruh-Roh. Request is incomplete. Identifier does not exist."
       end
+    end
+
+    post '/sources/:identifier/events' do
+      if event_not_defined(params)
+        halt 400, "Oh shiz. Request is incomplete. Event not defined."
+      end
+    end
+
+    post '/sources/:identifier/events/:event_name' do
+      if event_name_not_defined(params)
+        halt 400, "Snappppp. Request is incomplete. Event name not defined."
+      end
+    end
+
+    def missing_required_source_params?(params)
+      params[:identifier].nil? || params[:rootUrl].nil?
+    end
+
+    def missing_required_payload?(params)
+      params[:payload].nil?
+    end
+
+    def client_already_exists?(identifier)
+      # TOOD: Client.exists?(identifier)
+      !DB.from(:clients).select.where(identifier: identifier).empty?
+    end
+
+    def identifier_does_not_exist(params)
+      params[:identifier].nil?
     end
 
     def save identifier, payload
@@ -91,18 +102,6 @@ module TrafficSpy
 
     def event_name_not_defined(params)
       params[:name].nil?
-    end
-
-    post '/sources/:identifier/events' do
-      if event_not_defined(params)
-        halt 400, "Oh shiz. Request is incomplete. Event not defined."
-      end
-    end
-
-    post '/sources/:identifier/events/:event_name' do
-      if event_name_not_defined(params)
-        halt 400, "Snappppp. Request is incomplete. Event name not defined."
-      end
     end
 
   end
