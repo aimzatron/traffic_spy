@@ -30,6 +30,24 @@ describe TrafficSpy::Url do
 
       end
     end
+
+    describe "request response time" do 
+      it "returns a descending list of response times" do
+        url = described_class.new(url: "url", response_time: "1")
+
+        url.save
+        expect(urls_table.count).to eq 1
+      end
+    end
+
+    describe "resquest average response time" do
+      it "returns a list of average response times by url" do
+        url = described_class.new(url: "url", response_time: 1)
+
+        url.save
+        expect(urls_table.count).to eq 1
+      end
+    end
     
     describe "request count" do
       it "returns a count of number of URL requests" do
@@ -59,6 +77,7 @@ describe TrafficSpy::Url do
       expect(url.url).to eq "http://url.com"
       expect(url.client_id).to eq 1
     end
+
   end
 
 end

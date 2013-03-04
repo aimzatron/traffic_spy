@@ -31,6 +31,37 @@ module TrafficSpy
     def request_count
       Payload.find_all_by_url_id(id).count
     end
+
+    def payload_data
+      DB.from :payloads_table
+    end 
+
+    def self.response_query
+      DB.execute("SELECT *
+      FROM payloads
+      JOIN urls
+      ON payloads.url_id = urls.id;
+      ORDER BY response_time DESC")
+    end
+
+    def self.average_response_time
+      puts "average_response_time"
+      average = DB.execute("SELECT *
+      FROM payloads
+      JOIN urls
+      ON payloads.url_id = urls.id;
+      SELECT url_id, AVG(RESPONSE_TIME)
+      GROUP BY url_id
+      ORDER BY response_time DESC")
+
+      query = DB.fetch(average)
+      result = query.to_s
+      puts result.inspect
+
+      query.to_s
+
+    end
+    
   end
 
 end

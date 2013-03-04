@@ -125,9 +125,34 @@ describe "Traffic Spy App" do
 
       #3. post
       #4. check ALL THE THINGS )(one at a time)
+  end
+
+  describe "url statistics" do
+
+    context "identifier does not exist" do
+      it "returns a message that the URL hasn't been requested" do
+        post '/sources/IDENTIFIER/urls/data'
+        expect(last_response).to_not be_empty
+      end
+    end
+
+    context "identifier exists" do
+       it "returns a query of longest response time to shortest" do
+         post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+         expect(TrafficSpy::Url.response_query).to_not be_nil
+        # pending
+      end
+    end
+
+    context "identifier exists" do
+       it "returns a query of the average length of response time per url" do
+         post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+         expect(TrafficSpy::Url.average_response_time).to_not be_nil
+        # pending
+      end
     end
 
   end
+
 end
-
-
+end

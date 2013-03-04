@@ -58,6 +58,18 @@ module TrafficSpy
 
     end
 
+    def identifier_does_not_exist(params)
+      params[:identifier].nil?
+    end
+
+
+    post'/sources/:identifier/urls/:data' do
+      if identifier_does_not_exist(params)
+        halt 400, "Ruh-Roh. Request is incomplete. Identifier does not exist."
+      end
+    end
+
+
     def save identifier, payload
       client = Client.find_by_identifier identifier
 
@@ -67,5 +79,4 @@ module TrafficSpy
 
 
   end
-
 end
