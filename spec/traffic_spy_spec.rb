@@ -159,6 +159,16 @@ describe "Traffic Spy App" do
     end
 
   end
+
+  describe "application details" do
+
+    it "displays a message when the identifier does not exist" do
+
+      get 'sources/non_exisitent_identifier'
+
+      pending "need to finish this.."
+    end
+  end
 end
 
 
