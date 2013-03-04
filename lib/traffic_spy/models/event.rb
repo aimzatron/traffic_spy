@@ -46,9 +46,7 @@ module TrafficSpy
       JOIN events
       ON payloads.event_id = events.id;
       GROUP BY event_id
-      ORDER BY count(event_id)")
-
-      puts self.events_received
+      ORDER BY count(event_id) DESC")
     end
   end
 
