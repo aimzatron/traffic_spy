@@ -54,13 +54,13 @@ module TrafficSpy
     end
 
 
-    post'/sources/:identifier/urls' do
+    get '/sources/:identifier/urls' do
       if identifier_does_not_exist(params)
         halt 400, "Ruh-Roh. Request is incomplete. Identifier does not exist."
       end
     end
 
-    post '/sources/:identifier/events' do
+    get '/sources/:identifier/events' do
       if event_not_defined(params)
         halt 400, "Oh shiz. Request is incomplete. Event not defined."
       end
