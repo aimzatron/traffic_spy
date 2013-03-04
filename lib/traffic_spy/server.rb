@@ -10,10 +10,6 @@ module TrafficSpy
       erb :error
     end
 
-    get '/sources/:identifier' do
-      'you need a test for this'
-    end
-
     post '/sources' do
       # client = Client.new params[:identifier], params[:rootUrl]
       # else
@@ -52,6 +48,11 @@ module TrafficSpy
       end
 
     end
+
+    get '/sources/:identifier' do
+      'you need a test for this'
+    end
+
 
     post'/sources/:identifier/urls' do
       if identifier_does_not_exist(params)

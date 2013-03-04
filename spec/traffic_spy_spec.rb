@@ -210,12 +210,13 @@ describe "Traffic Spy App" do
       end
     end
 
-    describe "application event details" do
-      context "event name exists" do
-        it "returns breakdown hour by hour of when the event was received" do
-          post '/sources/:identifier/events/:name'
-          expect(last_response).to_not be_empty
-        end
+  end
+
+  describe "application event details" do
+    context "event name exists" do
+      it "returns breakdown hour by hour of when the event was received" do
+        post '/sources/:identifier/events/:name'
+        expect(last_response).to_not be_empty
       end
     end
   end
