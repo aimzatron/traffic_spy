@@ -13,7 +13,6 @@ module TrafficSpy
     def save
       Event.data.insert(name: name, client_id: client_id)
       Event.new Event.data.select.order(Sequel.desc(:id)).first
-
     end
 
     def self.data
@@ -48,6 +47,15 @@ module TrafficSpy
       GROUP BY event_id
       ORDER BY count(event_id) DESC")
     end
+  
+
+    def self.time_requested 
+        DB.execute("SELECT *
+        FROM payloads
+        JOIN events
+        ON payloads.event_id = events.id")
+    end
+
   end
 
 end

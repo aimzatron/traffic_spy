@@ -199,17 +199,26 @@ end
 
     context "event exists" do
       it "returns a query of events by event_id in order of receipt amt" do
-        post '/sources/IDENTIFIER/events'
+        post '/sources/:identifier/events'
         expect(TrafficSpy::Event.events_received).to_not be_nil
       end
     end
 
     context "event does not exist" do
       it "returns a message that no events have been defined" do
-        post '/sources/IDENTIFIER/events/data'
+        post '/sources/:identifier/events/data'
         expect(last_response).to_not be_empty
         end
       end
+    end
+
+  describe "application event details" do
+    context "event name exists" do
+      it "returns breakdown hour by hour of when the event was received" do
+      post '/sources/:identifier/events/:name'
+      expect(last_response).to_not be_empty
+      end
+    end  
   end
 
 end
