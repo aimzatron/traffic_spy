@@ -4,6 +4,8 @@ describe TrafficSpy::Url do
 
   before do
     delete_urls
+    delete_payloads
+    delete_clients
   end
 
   describe "new" do
@@ -31,21 +33,32 @@ describe TrafficSpy::Url do
       end
     end
 
-    describe "request response time" do
-      it "returns a descending list of response times" do
-        url = described_class.new(url: "url", response_time: "1")
+    describe "response times" do
 
-        url.save
-        expect(urls_table.count).to eq 1
+      before do
+        TrafficSpy::Client.new(identifier: "client",
+                               root_url:"http://jumpstartlab.com").save
+
+        add_dummy_payload respondedIn: 20, url: "url"
+        add_dummy_payload respondedIn: 10, url: "url"
+        add_dummy_payload respondedIn: 30, url: "url"
+        add_dummy_payload respondedIn: 40, url: "url1"
+
       end
-    end
 
-    describe "resquest average response time" do
-      it "returns a list of average response times by url" do
-        url = described_class.new(url: "url", response_time: 1)
+      let(:url) { described_class.find_by_id 1 }
 
-        url.save
-        expect(urls_table.count).to eq 1
+      it "returns a descending list of response times" do
+        times = url.response_times
+
+        expect(times.size).to eq  3
+        expect(times[0]).to eq 30
+        expect(times[1]).to eq 20
+        expect(times[2]).to eq 10
+      end
+
+      it "returns the average response time of the url" do
+        expect(url.average_response_time).to eq 20
       end
     end
 

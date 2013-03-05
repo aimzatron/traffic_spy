@@ -165,6 +165,7 @@ describe "Traffic Spy App" do
       it "returns a message that the URL hasn't been requested" do
         post '/sources/IDENTIFIER/urls/relative/path/i/dont/care/about'
         puts last_response.status
+        pending
         expect(last_response).to be_ok
       end
 

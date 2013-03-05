@@ -21,35 +21,15 @@ describe TrafficSpy::Event do
 
   describe "instance methods" do
 
-    def add_dummy_payload values
-      default_values =
-        { url: "http://jumpstartlab.com/blog",
-          requestedAt:"2013-02-16 21:38:28 -0700",
-          respondedIn:37,
-          referredBy:"http://jumpstartlab.com",
-          requestType:"GET",
-          parameters:[],
-          eventName: "socialLogin",
-          userAgent:"Mozilla/5.0 (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-          resolutionWidth:"1920",
-          resolutionHeight:"1280",
-          ip:"63.29.38.211" }
-
-      params = default_values.merge values
-
-      TrafficSpy::Payload.create(params).save
-    end
 
     describe "save" do
+
       it "adds an entry to the events table" do
-
         event = described_class.new(name: "name", client_id: 4)
-
         event.save
-
         expect(events_table.count).to eq 1
-
       end
+
     end
 
     describe "request_times" do

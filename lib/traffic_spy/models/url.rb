@@ -32,27 +32,28 @@ module TrafficSpy
       DB.from :payloads_table
     end
 
-    def self.response_query
-      DB.execute("SELECT *
+    def response_times
+      query_string = %Q{SELECT response_time AS time
       FROM payloads
-      JOIN urls
-      ON payloads.url_id = urls.id;
-      ORDER BY response_time DESC")
+      JOIN urls ON urls.id = url_id
+      WHERE urls.id = #{id}
+      GROUP BY time
+      ORDER BY time DESC}
+
+      query = DB.fetch query_string
+      query.collect {|entry| entry[:time]}
+
     end
 
-    def self.average_response_time
-      average = DB.execute("SELECT *
+    def average_response_time
+      query_string = %Q{SELECT AVG(response_time) AS time
       FROM payloads
-      JOIN urls
-      ON payloads.url_id = urls.id;
-      SELECT url_id, AVG(RESPONSE_TIME)
-      GROUP BY url_id
-      ORDER BY response_time DESC")
+      JOIN urls ON urls.id = url_id
+      WHERE url_id = #{id}}
 
-      query = DB.fetch(average)
-      result = query.to_s
 
-      result
+      query = DB.fetch query_string
+      query.first[:time]
 
     end
 
