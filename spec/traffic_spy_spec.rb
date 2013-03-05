@@ -57,7 +57,6 @@ describe "Traffic Spy App" do
       it "returns a message with the forbidden status" do
         TrafficSpy::Client.new(identifier: "id", root_url: "url").save
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
-        pending "This isn't testing for the right thing, it's also a duplicate test"
         expect(last_response.body).to_not be_empty
       end
 
@@ -172,9 +171,13 @@ describe "Traffic Spy App" do
     end
 
     context "identifier exists" do
-      it "returns a query of the average length of response time per url" do
-        post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
+
+      it "it can parse the URL correctly" do
+        #TODO add stuff to db first
+        get '/sources/IDENTIFIER/urls/RELATIVE/PATH'
         pending "need to setup data first? also doesn't test the right thing"
+
+        # test that we can parse the url correctly -> check the status to be ok
         expect(TrafficSpy::Url.average_response_time).to_not be_nil
       end
     end
@@ -194,10 +197,12 @@ describe "Traffic Spy App" do
 
     context "event exists" do
       it "returns a query of events by event_id in order of receipt amt" do
+        #TODO add stuff to db first
         get '/sources/identifier/events'
 
         pending "i don't think this test is right.."
-        expect(TrafficSpy::Event.events_received).to_not be_nil
+        # test that we can parse the url correctly -> check the status to be ok
+        #expect(TrafficSpy::Event.events_received).to_not be_nil
       end
 
     end
@@ -205,9 +210,10 @@ describe "Traffic Spy App" do
     context "event does not exist" do
 
       it "returns a message that no events have been defined" do
+        #TODO look into cucumber for testing our views??? maybe? somehow?? i'unno
         get '/sources/identifier/events'
         pending "need to setup data"
-        expect(last_response).to_not be_empty
+        #expect(last_response).to_not be_empty
       end
 
     end
@@ -219,9 +225,11 @@ describe "Traffic Spy App" do
     context "event name exists" do
 
       it "returns breakdown hour by hour of when the event was received" do
+        #TODO add stuff to db first
         get '/sources/identifier/events/name'
         pending "need to setup data"
-        expect(last_response).to_not be_empty
+        # test that we can parse the url correctly -> check the status to be ok
+        #expect(last_response).to_not be_empty
       end
 
     end

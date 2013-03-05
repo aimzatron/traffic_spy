@@ -25,7 +25,6 @@ module TrafficSpy
 
     def save
 
-
       unless exists?
       id = Payload.data.insert(browser_id: browser_id,
                             event_id: event_id,

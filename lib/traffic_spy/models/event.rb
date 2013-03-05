@@ -15,6 +15,25 @@ module TrafficSpy
       Event.new Event.data.select.order(Sequel.desc(:id)).first
     end
 
+    def request_times
+
+      #join event table with the payloads by event_id
+
+      query_string = %Q{SELECT request_time
+        FROM payloads
+        JOIN events ON payloads.event_id = events.id
+        WHERE events.id = #{id}
+      }
+
+      query = DB.fetch query_string
+
+      query.each_with_object(Array.new(24, 0)) do |entry, hours|
+        hour = entry[:request_time].hour
+        hours[hour] += 1
+      end
+
+    end
+
     def self.data
       DB.from(:events)
     end
@@ -39,21 +58,13 @@ module TrafficSpy
       result.nil? ? nil : Event.new(result)
     end
 
-    def self.events_received  
+    def self.events_received
       DB.execute("SELECT *
       FROM payloads
       JOIN events
       ON payloads.event_id = events.id;
       GROUP BY event_id
       ORDER BY count(event_id) DESC")
-    end
-  
-
-    def self.time_requested 
-        DB.execute("SELECT *
-        FROM payloads
-        JOIN events
-        ON payloads.event_id = events.id")
     end
 
   end

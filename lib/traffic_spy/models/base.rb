@@ -57,8 +57,8 @@ module TrafficSpy
     DB.create_table? :payloads do
       Integer :browser_id
       Integer :event_id
-      DateTime :response_time
-      Integer :request_time
+      Integer :response_time
+      DateTime :request_time
       Integer :url_id
       Integer :ip_id
       Integer :screen_resolution_id
