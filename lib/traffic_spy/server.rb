@@ -1,6 +1,6 @@
 module TrafficSpy
   class Server < Sinatra::Base
-    set :view, 'lib/views'
+    set :views, 'lib/views'
 
     get '/' do
       erb :index
@@ -20,7 +20,7 @@ module TrafficSpy
       if missing_required_source_params?(params)
         halt(400, "Registration incomplete. Missing params.")
 
-      elsif client_already_exists?(params[:identifier])
+      elsif client_exists?(params[:identifier])
         halt(403, "An account already exists with this identifier")
 
       else
@@ -53,12 +53,19 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do
-      'you need a test for this'
+      if client_exists?(@identifier)
+        @client = TrafficSpy::Client.find_by_identifier params[:identifier]
+        erb :application_details
+      else
+        @identifier = params[:identifier]
+        erb :missing_account
+      end
+
     end
 
 
     get '/sources/:identifier/urls' do
-      if identifier_does_not_exist(params)
+      if missing_identifier(params)
         halt 400, "Ruh-Roh. Request is incomplete. Identifier does not exist."
       end
     end
@@ -83,12 +90,12 @@ module TrafficSpy
       params[:payload].nil?
     end
 
-    def client_already_exists?(identifier)
+    def client_exists?(identifier)
       # TOOD: Client.exists?(identifier)
       !DB.from(:clients).select.where(identifier: identifier).empty?
     end
 
-    def identifier_does_not_exist(params)
+    def missing_identifier(params)
       params[:identifier].nil?
     end
 

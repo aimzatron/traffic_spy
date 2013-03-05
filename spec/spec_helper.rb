@@ -20,6 +20,10 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
+def app
+  TrafficSpy::Server
+end
+
 def db
   TrafficSpy::DB
 end

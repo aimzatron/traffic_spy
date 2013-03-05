@@ -20,6 +20,8 @@ group :development do
   gem 'sqlite3'
   gem 'rack'
   gem 'rack-test'
+  gem 'capybara'
+
 
 end
 
