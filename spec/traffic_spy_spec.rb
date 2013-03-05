@@ -4,7 +4,6 @@ require 'rack/test'
 #set :environment, :development
 
 def app
-  #Sinatra::Application
   TrafficSpy::Server
 end
 
@@ -48,20 +47,24 @@ describe "Traffic Spy App" do
     end
 
     context "existing identifier" do
+
       it "returns a 403 Forbidden status" do
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
         expect(last_response).to be_forbidden
       end
 
-      it "returns a a message with the forbidden status" do
+      it "returns a message with the forbidden status" do
         TrafficSpy::Client.new(identifier: "id", root_url: "url").save
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
+        pending "This isn't testing for the right thing, it's also a duplicate test"
         expect(last_response.body).to_not be_empty
       end
+
     end
 
     context "acceptable request" do
+
       it "returns a 200 OK status" do
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
         expect(last_response).to be_ok
@@ -77,12 +80,11 @@ describe "Traffic Spy App" do
 
       it "it returns a json object with the identifier" do
         post '/sources', params = {identifier: 'id', rootUrl:'url'}
-        json = JSON.parse last_response.body
-
-        expect(json["identifier"]).to eq "id"
-
+        json = JSON.parse last_response.body, :symbolize_names => true
+        expect(json[:identifier]).to eq 'id'
       end
     end
+
   end
 
   describe "processing requests" do
@@ -107,14 +109,17 @@ describe "Traffic Spy App" do
     end
 
     context "missing payload" do
+
       it "returns a 400 Bad Request" do
         post '/sources/IDENTIFIER/data'
         expect(last_response).to be_bad_request
       end
+
       it "returns a descriptive message" do
         post '/sources/IDENTIFIER/data'
         expect(last_response.body).to_not be_empty
       end
+
     end
 
     context "unique payload" do
@@ -130,7 +135,6 @@ describe "Traffic Spy App" do
 
       it "adds the payload to the database" do
         post '/sources/indentifier/data', {payload: payload}
-
         expect(payloads_table.count).to eq 1
       end
     end
@@ -142,16 +146,13 @@ describe "Traffic Spy App" do
       it "returns a 403 forbidden status" do
         post '/sources/indentifier/data', {payload: payload}
         post '/sources/indentifier/data', {payload: payload}
-
         expect(last_response).to be_forbidden
       end
 
       it "does not add a new entry to the db" do
         post '/sources/indentifier/data', {payload: payload}
         post '/sources/indentifier/data', {payload: payload}
-
         expect(payloads_table.count).to eq 1
-
       end
 
     end
@@ -161,16 +162,19 @@ describe "Traffic Spy App" do
   describe "url statistics" do
 
     context "identifier does not exist" do
+
       it "returns a message that the URL hasn't been requested" do
-        post '/sources/IDENTIFIER/urls/data'
-        expect(last_response).to_not be_empty
+        post '/sources/IDENTIFIER/urls/relative/path/i/dont/care/about'
+        puts last_response.status
+        expect(last_response).to be_ok
       end
+
     end
 
     context "identifier exists" do
       it "returns a query of the average length of response time per url" do
         post '/sources/IDENTIFIER/urls/RELATIVE/PATH'
-        pending "need to setup data first?"
+        pending "need to setup data first? also doesn't test the right thing"
         expect(TrafficSpy::Url.average_response_time).to_not be_nil
       end
     end

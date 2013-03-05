@@ -19,8 +19,10 @@ module TrafficSpy
 
       if missing_required_source_params?(params)
         halt(400, "Registration incomplete. Missing params.")
+
       elsif client_already_exists?(params[:identifier])
         halt(403, "An account already exists with this identifier")
+
       else
         identifier = params[:identifier]
         root_url = params[:rootUrl]
@@ -29,6 +31,7 @@ module TrafficSpy
         client.save
 
         {identifier: client.identifier}.to_json
+
       end
     end
 
