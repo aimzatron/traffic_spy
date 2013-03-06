@@ -29,9 +29,9 @@ You only need to run steps 1 - 3 once.
 ### To run the Tests
 Make sure you run the commands with the test environment set
 
-1. `traffic_spy_env=test bundle exec rake db:setup`
-2. `traffic_spy_env=test bundle exec rake db:migrate`
-3. `traffic_spy_env=test bundle exec gaurd`
+1. `TRAFFIC_SPY_ENV=test bundle exec rake db:setup`
+2. `TRAFFIC_SPY_ENV=test bundle exec rake db:migrate`
+3. `TRAFFIC_SPY_ENV=test bundle exec gaurd`
 
 ## Contributing
 
