@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe TrafficSpy::ScreenResolution do
 
-  before do
-    delete_screen_resolutions
-  end
-
   describe "new" do
     it "creates a new entry in the database" do
 

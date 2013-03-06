@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe TrafficSpy::OperatingSystem do
 
-  before do
-    delete_operating_systems
-  end
-
   describe "new" do
     it "creates a new entry in the database" do
 

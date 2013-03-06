@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe TrafficSpy::CampaignEvent do
 
-  before do
-    delete_campaign_events
-  end
-
   describe "new" do
     it "creates a new entry in the database" do
 

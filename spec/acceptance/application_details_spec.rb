@@ -35,7 +35,7 @@ describe 'Application Details' do
     end
 
     it 'displays most request URLS to least requested URLs' do
-      #page.should have_content
+      page.should have_content "URL Request Times"
     end
   end
 end

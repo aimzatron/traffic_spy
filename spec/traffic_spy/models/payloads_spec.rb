@@ -2,17 +2,6 @@ require 'spec_helper'
 
 describe TrafficSpy::Payload do
 
-  before do
-    delete_payloads
-    delete_clients
-    delete_urls
-    delete_events
-    delete_screen_resolutions
-    delete_ips
-    delete_web_browsers
-    delete_operating_systems
-  end
-
   describe "new" do
     it "creates a new entry in the database" do
 

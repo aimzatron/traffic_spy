@@ -2,12 +2,6 @@ require 'spec_helper'
 
 describe TrafficSpy::Url do
 
-  before do
-    delete_urls
-    delete_payloads
-    delete_clients
-  end
-
   describe "new" do
     it "creates a new entry in the database" do
 

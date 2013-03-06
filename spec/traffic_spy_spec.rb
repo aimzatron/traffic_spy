@@ -9,19 +9,6 @@ describe "Traffic Spy App" do
   let(:client) { TrafficSpy::Client }
   let(:url) { TrafficSpy::Url }
 
-	after do
-    delete_clients
-    delete_payloads
-    delete_urls
-    delete_web_browsers
-    delete_screen_resolutions
-    delete_events
-    delete_operating_systems
-    delete_ips
-
-	end
-
-
   describe "registration" do
 
     context "missing params" do

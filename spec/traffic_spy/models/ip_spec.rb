@@ -3,10 +3,6 @@ require 'spec_helper'
 
 describe TrafficSpy::Ip do
 
-  before do
-		delete_ips
-  end
-
   describe "new" do
     it "creates a new entry in the database" do
 

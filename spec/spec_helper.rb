@@ -13,6 +13,14 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
+  #Wrap each test in transaction and raise an error so it rolls back
+  config.around(:each) do |example|
+    TrafficSpy::DB.transaction do
+      example.run
+      raise Sequel::Rollback
+    end
+  end
+
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
@@ -66,56 +74,6 @@ end
 
 def web_browsers_table
     db.from(:web_browsers)
-end
-
-def delete_urls
-    db["DELETE FROM urls"].delete
-    db.from(:sqlite_sequence).where(name:"urls").delete
-end
-
-def delete_campaign_events
-    db["DELETE FROM campaign_events"].delete
-    db.from(:sqlite_sequence).where(name:"campaign_events").delete
-end
-
-def delete_campaigns
-    db["DELETE FROM campaigns"].delete
-    db.from(:sqlite_sequence).where(name:"campaigns").delete
-end
-
-def delete_clients
-    db["DELETE FROM clients"].delete
-    db.from(:sqlite_sequence).where(name:"clients").delete
-end
-
-def delete_events
-    db["DELETE FROM events"].delete
-    db.from(:sqlite_sequence).where(name:"events").delete
-end
-
-def delete_ips
-    db["DELETE FROM ips"].delete
-    db.from(:sqlite_sequence).where(name:"ips").delete
-end
-
-def delete_operating_systems
-    db["DELETE FROM operating_systems"].delete
-    db.from(:sqlite_sequence).where(name:"operating_systems").delete
-end
-
-def delete_payloads
-    db["DELETE FROM payloads"].delete
-    db.from(:sqlite_sequence).where(name:"payloads").delete
-end
-
-def delete_screen_resolutions
-    db["DELETE FROM screen_resolutions"].delete
-    db.from(:sqlite_sequence).where(name:"screen_resolutions").delete
-end
-
-def delete_web_browsers
-    db["DELETE FROM web_browsers"].delete
-    db.from(:sqlite_sequence).where(name:"web_browsers").delete
 end
 
 def add_dummy_payload values

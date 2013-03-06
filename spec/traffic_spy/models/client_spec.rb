@@ -2,16 +2,6 @@ require 'spec_helper'
 
 describe TrafficSpy::Client do
 
-  before do
-    delete_clients
-    delete_urls
-    delete_web_browsers
-    delete_payloads
-    delete_operating_systems
-    delete_screen_resolutions
-    delete_events
-  end
-
   describe "new" do
     it "creates a new client" do
 

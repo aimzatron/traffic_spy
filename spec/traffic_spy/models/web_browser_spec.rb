@@ -3,10 +3,6 @@ require 'spec_helper'
 
 describe TrafficSpy::WebBrowser do
 
-  before do
-		delete_web_browsers
-  end
-
   describe "new" do
     it "creates a new entry in the database" do
 
