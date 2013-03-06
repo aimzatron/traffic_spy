@@ -184,10 +184,18 @@ describe TrafficSpy::Client do
   end
 
   describe "Class methods" do
+
     it "finds a client by identifier" do
       described_class.new(identifier:"ident", root_url:"http://url.com").save
       client = described_class.find_by_identifier "ident"
       expect(client.id).to eq 1
+      expect(client.root_url).to eq "http://url.com"
+    end
+
+    it "finds a client by identifier" do
+      described_class.new(identifier:"ident", root_url:"http://url.com").save
+      client = described_class.find_by_id 1
+      expect(client.identifier).to eq  "ident"
       expect(client.root_url).to eq "http://url.com"
     end
 
@@ -196,6 +204,18 @@ describe TrafficSpy::Client do
       client = described_class.find_by_root_url "http://url.com"
       expect(client.id).to eq 1
       expect(client.root_url).to eq "http://url.com"
+    end
+
+    context "client exists? given identifier" do
+
+      it "exists" do
+        described_class.new(identifier:"ident", root_url:"http://url.com").save
+        expect(described_class.exists? "ident").to eq true
+      end
+
+      it "doest not exist" do
+        expect(described_class.exists? "ident").to eq false
+      end
     end
   end
 

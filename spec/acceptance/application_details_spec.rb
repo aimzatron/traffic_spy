@@ -27,15 +27,13 @@ describe 'Application Details' do
 
       add_dummy_payload url: 'http://jumpstartlab.com/blog/3', ip: 'ip1'
       add_dummy_payload url: 'http://jumpstartlab.com/blog/3', ip: 'ip2'
+
+      visit '/sources/jumpstartlab'
     end
 
     it 'goes to the application details page' do
-      visit "/sources/jumpstartlab"
       page.should have_content "Application Details for jumpstartlab"
     end
 
-    it 'displays most request URLS to least requested URLs' do
-      page.should have_content "URL Request Times"
-    end
   end
 end

@@ -103,6 +103,15 @@ module TrafficSpy
       Client.new result unless result.nil?
     end
 
+    def self.exists? identifier
+      not find_by_identifier(identifier).nil?
+    end
+
+    def self.find_by_id id
+      result = data.select.where(id: id).first
+      Client.new result unless result.nil?
+    end
+
   end
 
 end

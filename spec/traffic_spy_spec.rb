@@ -142,6 +142,4 @@ describe "Traffic Spy App" do
 
   end
 
-
-
 end

@@ -1,0 +1,10 @@
+<H1><%= @client.identifier %> Events</H1>
+<ul>
+
+  <% @client.events.sort_by{|event| event.times_received}.each do |event| %>
+    <li>
+    <a href="/sources/<%=@client.identifier%>/events/<%= event.name%>"><%= event.name %></a> : <%= event.times_received %>
+    </li>
+  <% end %>
+
+</ul>

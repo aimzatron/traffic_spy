@@ -11,16 +11,10 @@ module TrafficSpy
     end
 
     post '/sources' do
-      # client = Client.new params[:identifier], params[:rootUrl]
-      # else
-      #
-      #   client.save
-      # end
-
       if missing_required_source_params?(params)
         halt(400, "Registration incomplete. Missing params.")
 
-      elsif client_exists?(params[:identifier])
+      elsif Client.exists?(params[:identifier])
         halt(403, "An account already exists with this identifier")
 
       else
@@ -52,9 +46,9 @@ module TrafficSpy
 
     end
 
-    get '/sources/:identifier' do
-      if client_exists?(@identifier)
-        @client = TrafficSpy::Client.find_by_identifier params[:identifier]
+    get '/sources/:identifier/?' do
+      if Client.exists? params[:identifier]
+        @client = Client.find_by_identifier params[:identifier]
         erb :application_details
       else
         @identifier = params[:identifier]
@@ -63,22 +57,49 @@ module TrafficSpy
 
     end
 
+    get '/sources/:identifier/urls/*' do
+      path = params[:splat]
 
-    get '/sources/:identifier/urls' do
-      if missing_identifier(params)
-        halt 400, "Ruh-Roh. Request is incomplete. Identifier does not exist."
+      if Client.exists? params[:identifier]
+        client = Client.find_by_identifier params[:identifier]
+        url = Url.find_by_client_id_and_relative_path client_id, path
+
+        if url.nil?
+          @path = path
+          erb :no_url
+        else
+          erb :url
+        end
+      else
+        erb :missing_account
+      end
+
+    end
+
+
+    get '/sources/:identifier/urls/?' do
+
+
+    end
+
+    get '/sources/:identifier/events/?' do
+      if Client.exists? params[:identifier]
+        @client = Client.find_by_identifier params[:identifier]
+        erb :events
+      else
+        @params[:identifier]
+        erb :missing_account
       end
     end
 
-    get '/sources/:identifier/events' do
-      if event_not_defined(params)
-        halt 400, "Oh shiz. Request is incomplete. Event not defined."
-      end
-    end
-
-    post '/sources/:identifier/events/:event_name' do
-      if event_name_not_defined(params)
-        halt 400, "Snappppp. Request is incomplete. Event name not defined."
+    get '/sources/:identifier/events/*' do
+      event_name = params[:splat]
+      if Event.exists_for? event_name, params[:identifier]
+        client_id = Client.find_by_identifier(params[:identifier]).id
+        @event = Event.find_by name: event_name, client_id: client_id
+        erb :event
+      else
+        erb :no_event
       end
     end
 
@@ -88,11 +109,6 @@ module TrafficSpy
 
     def missing_required_payload?(params)
       params[:payload].nil?
-    end
-
-    def client_exists?(identifier)
-      # TOOD: Client.exists?(identifier)
-      !DB.from(:clients).select.where(identifier: identifier).empty?
     end
 
     def missing_identifier(params)
@@ -109,10 +125,6 @@ module TrafficSpy
 
     def event_not_defined(params)
       params[:event_id].nil?
-    end
-
-    def event_name_not_defined(params)
-      params[:name].nil?
     end
 
   end

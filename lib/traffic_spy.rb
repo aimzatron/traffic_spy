@@ -8,6 +8,7 @@ require "traffic_spy/version"
 
 require "json"
 require "date"
+require "uri"
 
 
 module TrafficSpy

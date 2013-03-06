@@ -1,4 +1,44 @@
 <H1>Application Details for <%= @client.identifier %></H1>
 
-<div id="url-requests">URL REQUESTS</div>
+<h2>URL Requests ordered by request count</h2>
+<ul>
+  <% @client.urls.each do |url| %>
+    <li><a href="<%= @client.identifier %>/urls<%= url.relative_path%>"><%= url.url %></a></li>
+  <% end %>
+</ul>
+
+<h2>Web Browser Breakdown</h2> <ul>
+  <% @client.web_browsers.each do |(browser, count)| %>
+    <li><%= browser %> : <%= count %></li>
+  <% end %>
+</ul>
+
+<h2>Operating System Breakdown</h2> <ul>
+  <% @client.operating_systems.each do |(os, count)| %>
+    <li><%= os %> : <%= count %></li>
+  <% end %>
+</ul>
+
+<h2>Operating System Breakdown</h2> <ul>
+  <% @client.screen_resolutions.each do |(screen, count)| %>
+    <li><%= screen %> : <%= count %></li>
+  <% end %>
+</ul>
+
+<h2>URL ordered by average response time</h2> <ul>
+  <% urls = @client.urls.sort_by{|url| url.average_response_time} %>
+  <% urls.each do |url| %>
+    <li><%= url.url %> : <%= url.average_response_time %> ms</li>
+  <% end %>
+</ul>
+
+
+<h2>Operating System Breakdown</h2> <ul>
+  <% @client.screen_resolutions.each do |(screen, count)| %>
+    <li><%= screen %> : <%= count %></li>
+  <% end %>
+</ul>
+
+<h2>Events</h2>
+<a href="<%= @client.identifier %>/events">Click to see events</a>
 

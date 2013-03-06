@@ -26,6 +26,26 @@ describe TrafficSpy::Event do
 
     end
 
+    describe "times_received" do
+      it "returns the number of times the event was requested" do
+
+      TrafficSpy::Client.new(identifier: "mock_client", root_url: "http://jumpstartlab.com").save
+
+        add_dummy_payload requestedAt: "2013-02-16 01:38:21 -0700"
+        add_dummy_payload requestedAt: "2013-02-16 01:38:22 -0700"
+        add_dummy_payload requestedAt: "2013-02-16 01:38:23 -0700"
+        add_dummy_payload requestedAt: "2013-02-16 01:38:11 -0700"
+        add_dummy_payload requestedAt: "2013-02-16 05:38:21 -0700"
+        add_dummy_payload requestedAt: "2013-02-16 14:38:22 -0700"
+        add_dummy_payload requestedAt: "2013-02-16 14:38:23 -0700"
+        add_dummy_payload eventName: "theOtherEvent"
+
+        event = described_class.find_by name: "socialLogin", client_id: 1
+
+        expect(event.times_received).to eq 7
+      end
+    end
+
     describe "request_times" do
       it "returns a hash that breaks down the event request by hour" do
 
@@ -66,13 +86,6 @@ describe TrafficSpy::Event do
       expect(events.name).to eq "Data"
     end
 
-    it "can find an event by name" do
-      events = TrafficSpy::Event.find_by_name "Data"
-      expect(events.name).to eq "Data"
-      expect(events.id).to eq 1
-      expect(events.client_id).to eq 1
-    end
-
     it "can find by anything" do
       events = TrafficSpy::Event.find_by name:"Data"
       expect(events.name).to eq "Data"
@@ -85,6 +98,24 @@ describe TrafficSpy::Event do
       expect(events.id).to eq 1
       expect(events.name).to eq "Data"
       expect(events.client_id).to eq 1
+    end
+
+    context "event exists? given name and client" do
+
+      before do
+        TrafficSpy::Client.new(root_url: "blargh", identifier:"wadup").save
+      end
+
+      it "exists" do
+
+        exists = described_class.exists_for?("Data", "wadup")
+        expect(exists).to eq true
+      end
+
+      it "does not exist" do
+        exists = described_class.exists_for?("bladlakjdf", "wadup")
+        expect(exists).to eq false
+      end
     end
   end
 

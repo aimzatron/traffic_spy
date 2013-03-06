@@ -33,9 +33,9 @@ describe TrafficSpy::Url do
         TrafficSpy::Client.new(identifier: "client",
                                root_url:"http://jumpstartlab.com").save
 
-        add_dummy_payload respondedIn: 20, url: "url"
-        add_dummy_payload respondedIn: 10, url: "url"
-        add_dummy_payload respondedIn: 30, url: "url"
+        add_dummy_payload respondedIn: 20, url: "http://jumpstartlab.com/blog/blah"
+        add_dummy_payload respondedIn: 10, url: "http://jumpstartlab.com/blog/blah"
+        add_dummy_payload respondedIn: 30, url: "http://jumpstartlab.com/blog/blah"
         add_dummy_payload respondedIn: 40, url: "url1"
 
       end
@@ -54,6 +54,10 @@ describe TrafficSpy::Url do
       it "returns the average response time of the url" do
         expect(url.average_response_time).to eq 20
       end
+
+      it "returns the relative path" do
+        expect(url.relative_path).to eq '/blog/blah'
+      end
     end
 
   end
@@ -61,20 +65,31 @@ describe TrafficSpy::Url do
   describe "class methods" do
 
     before do
-      url = described_class.new(client_id:1, url: "http://url.com")
+      url = described_class.new(client_id:1, url: "http://url.com/blah")
       url.save
     end
 
     it "can find a URL by id" do
       url = TrafficSpy::Url.find_by_id 1
-      expect(url.url).to eq "http://url.com"
+      expect(url.url).to eq "http://url.com/blah"
       expect(url.client_id).to eq 1
     end
 
     it "can find a URL by url" do
-      url = TrafficSpy::Url.find_by_url "http://url.com"
-      expect(url.url).to eq "http://url.com"
+      url = TrafficSpy::Url.find_by_url "http://url.com/blah"
+      expect(url.url).to eq "http://url.com/blah"
       expect(url.client_id).to eq 1
+    end
+
+    it "can find a URL by client and relative path" do
+      TrafficSpy::Client.new(root_url:"http://url.com", identifer:"id").save
+      id = 1
+      path = "/blah"
+
+      url = TrafficSpy::Url.find_by_client_id_and_relative_path id, path
+      expect(url.url).to eq "http://url.com/blah"
+      expect(url.client_id).to eq 1
+
     end
 
   end

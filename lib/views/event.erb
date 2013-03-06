@@ -1,0 +1,10 @@
+<H1>Event: <%= @event.name %></H1>
+
+<ul>
+  <% @event.request_times.each_with_index do |count, hour| %>
+
+    <li>
+    <%= hour %> : <%= count %> requests
+    </li>
+  <% end %>
+</ul>
