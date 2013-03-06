@@ -19,8 +19,7 @@ Or install it yourself as:
 ## Usage
 
 ### To run TrafficSpy as a web app:
-1. In your terminal, create a database
-    createdb traffic_spy
+1. In your terminal, create a database: `createdb traffic_spy`
 2. `rake db:setup`
 3. `rake db:migrate`
 4. `shotgun`
