@@ -1,74 +1,12 @@
 module TrafficSpy
 
-#  if ENV["TRAFFIC_SPY_ENV"] == "test"
+  if ENV["TRAFFIC_SPY_ENV"] == "test"
+    DB = Sequel.sqlite 'db/traffic_spy-test.sqlite3'
+  else
+    DB = Sequel.postgres 'traffic_spy'
+  end
 
-    DB = Sequel.sqlite 'db/trafficspy.sqlite3'
 
-    DB.create_table? :clients do
-      primary_key :id
-      String :identifier
-      String :root_url
-    end
-
-    DB.create_table? :urls do
-      primary_key :id
-      String :url
-      Integer :client_id
-    end
-
-    DB.create_table? :campaigns do
-      primary_key :id
-      String :name
-      Integer :client_id
-    end
-
-    DB.create_table? :events do
-      primary_key :id
-      String :name
-      Integer :client_id
-    end
-
-    DB.create_table? :web_browsers do
-      primary_key :id
-      String :name
-    end
-
-    DB.create_table? :ips do
-      primary_key :id
-      String :address
-    end
-
-    DB.create_table? :operating_systems do
-      primary_key :id
-      name :name
-    end
-
-    DB.create_table? :campaign_events do
-      campaign_id :campaign_id
-      event_id :event_id
-    end
-
-    DB.create_table? :screen_resolutions do
-      primary_key :id
-      Integer :width
-      Integer :height
-    end
-
-    DB.create_table? :payloads do
-      Integer :browser_id
-      Integer :event_id
-      Integer :response_time
-      DateTime :request_time
-      Integer :url_id
-      Integer :ip_id
-      Integer :screen_resolution_id
-      Integer :os_id
-      primary_key :id
-    end
-
- # else
- #   DB = Sequel.postgres 'traffic-spy'
- # end
 
 end
 

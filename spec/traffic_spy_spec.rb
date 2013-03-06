@@ -13,7 +13,7 @@ describe "Traffic Spy App" do
   let(:client) { TrafficSpy::Client }
   let(:url) { TrafficSpy::Url }
 
-  before do
+	after do
     delete_clients
     delete_payloads
     delete_urls
@@ -23,7 +23,7 @@ describe "Traffic Spy App" do
     delete_operating_systems
     delete_ips
 
-  end
+	end
 
   describe "registration" do
 

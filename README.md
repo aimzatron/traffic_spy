@@ -1,6 +1,6 @@
 # TrafficSpy
 
-TODO: Write a gem description
+Aimee's and Elaine's awesome TrafficSpy.
 
 ## Installation
 
@@ -18,7 +18,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### To run TrafficSpy as a web app:
+1. In your terminal, create a database
+    createdb traffic_spy
+2. `rake db:setup`
+3. `rake db:migrate`
+4. `shotgun`
+
+You only need to run steps 1 - 3 once.
+
+### To run the Tests
+Make sure you run the commands with the test environment set
+1. `traffic_spy_env=test bundle exec rake db:setup`
+2. `traffic_spy_env=test bundle exec rake db:migrate`
+3. `traffic_spy_env=test bundle exec gaurd`
 
 ## Contributing
 
