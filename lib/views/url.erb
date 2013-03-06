@@ -1,0 +1,12 @@
+<h1>URL Stats for <%= @url.relative_path %></h1>
+
+<% if @url.response_times.empty? %>
+  No requests have been made
+<% else %>
+  <%= @url.response_times.size %> requests have been made.
+  <ul>
+    <% @url.response_times.each do |response_time| %>
+      <li><%= response_time %> ms</li>
+    <% end %>
+  </ul>
+<% end %>

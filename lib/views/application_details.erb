@@ -3,7 +3,7 @@
 <h2>URL Requests ordered by request count</h2>
 <ul>
   <% @client.urls.each do |url| %>
-    <li><a href="<%= @client.identifier %>/urls<%= url.relative_path%>"><%= url.url %></a></li>
+    <li><a href="/sources/<%= @client.identifier %>/urls<%= url.relative_path%>"><%= url.url %></a></li>
   <% end %>
 </ul>
 
@@ -33,7 +33,7 @@
 </ul>
 
 
-<h2>Operating System Breakdown</h2> <ul>
+<h2>Screen Resolution Breakdown</h2> <ul>
   <% @client.screen_resolutions.each do |(screen, count)| %>
     <li><%= screen %> : <%= count %></li>
   <% end %>

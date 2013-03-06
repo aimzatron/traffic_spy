@@ -22,6 +22,7 @@ module TrafficSpy
       query_string = %Q{SELECT urls.id, urls.url
       FROM urls
       JOIN payloads ON urls.id = payloads.url_id
+      WHERE urls.client_id = #{id}
       GROUP BY urls.id
       ORDER BY count(urls.id) desc}
 

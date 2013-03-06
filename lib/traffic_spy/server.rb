@@ -58,27 +58,22 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/urls/*' do
-      path = params[:splat]
+      path = "/#{params[:splat].first}"
 
       if Client.exists? params[:identifier]
         client = Client.find_by_identifier params[:identifier]
-        url = Url.find_by_client_id_and_relative_path client_id, path
+        url = Url.find_by_client_id_and_relative_path client.id, path
 
         if url.nil?
           @path = path
           erb :no_url
         else
+          @url = url
           erb :url
         end
       else
         erb :missing_account
       end
-
-    end
-
-
-    get '/sources/:identifier/urls/?' do
-
 
     end
 

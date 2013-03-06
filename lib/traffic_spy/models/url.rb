@@ -41,7 +41,6 @@ module TrafficSpy
       FROM payloads
       JOIN urls ON urls.id = url_id
       WHERE urls.id = #{id}
-      GROUP BY time
       ORDER BY time DESC}
 
       query = DB.fetch query_string
@@ -58,18 +57,12 @@ module TrafficSpy
 
       query = DB.fetch query_string
       query.first[:time]
-
     end
 
     def self.find_by_client_id_and_relative_path client_id, path
-
       client = Client.find_by_id client_id
       url = client.root_url + path
-
-
-      puts "the url is #{ url }"
       find_by_url url
-
     end
 
   end

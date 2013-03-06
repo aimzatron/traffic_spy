@@ -61,7 +61,8 @@ describe TrafficSpy::Client do
 
       it "returns a collection of urls associated with the identifier, sorted from most visits to least visits" do
 
-        client.save
+        saved_client = client.save
+        client2.save
 
         add_dummy_payload(url: "http://jumpstartlab.com/url1",
                           respondedIn: 1)
@@ -75,8 +76,14 @@ describe TrafficSpy::Client do
                           respondedIn: 5)
         add_dummy_payload(url: "http://jumpstartlab.com/url3",
                           respondedIn: 5)
+        add_dummy_payload(url: "http://jumpstartlab2.com/url3",
+                          referredBy: "http://jumpstartlab2.com",
+                          respondedIn: 5)
+        add_dummy_payload(url: "http://jumpstartlab2.com/url2",
+                          referredBy: "http://jumpstartlab2.com",
+                          respondedIn: 5)
 
-        urls = client.urls
+        urls = saved_client.urls
         expect(urls.size).to eq 3
         expect(urls[0].url).to eq "http://jumpstartlab.com/url2"
         expect(urls[1].url).to eq "http://jumpstartlab.com/url1"
