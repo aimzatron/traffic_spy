@@ -113,6 +113,21 @@ module TrafficSpy
       Client.new result unless result.nil?
     end
 
+    def self.all
+      data.collect {|client| Client.new client}
+    end
+
+    def ==(other)
+      ids_eq = id == other.id
+      idents_eq = identifier == other.identifier
+      root_url_eq = root_url == other.root_url
+
+      ids_eq && idents_eq && root_url_eq
+
+    end
+
+
+
   end
 
 end

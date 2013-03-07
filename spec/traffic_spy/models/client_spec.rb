@@ -199,7 +199,7 @@ describe TrafficSpy::Client do
       expect(client.root_url).to eq "http://url.com"
     end
 
-    it "finds a client by identifier" do
+    it "finds a client by id" do
       described_class.new(identifier:"ident", root_url:"http://url.com").save
       client = described_class.find_by_id 1
       expect(client.identifier).to eq  "ident"
@@ -221,9 +221,22 @@ describe TrafficSpy::Client do
       end
 
       it "doest not exist" do
-        expect(described_class.exists? "ident").to eq false
+        expect(described_class.exists? "blah").to eq false
       end
     end
+
+    context ".all" do
+      it "returns all clients" do
+
+      client1 = described_class.new(identifier:"ident1", root_url:"http://url1.com").save
+      client2 = described_class.new(identifier:"ident2", root_url:"http://url2.com").save
+
+      expect(described_class.all.size).to eq 2
+      expect(described_class.all[0]).to eq client1
+      expect(described_class.all[1]).to eq client2
+      end
+    end
+
   end
 
 end

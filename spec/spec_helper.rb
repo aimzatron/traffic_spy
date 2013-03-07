@@ -3,6 +3,8 @@ require 'simplecov'
 
 SimpleCov.start do
   add_filter "spec"
+	add_filter "lib/traffic_spy/models/base.rb"
+	add_filter "lib/traffic_spy/server.rb"
 end
 
 require 'traffic_spy'

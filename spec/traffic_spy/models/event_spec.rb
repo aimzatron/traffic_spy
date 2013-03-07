@@ -116,6 +116,13 @@ describe TrafficSpy::Event do
         exists = described_class.exists_for?("bladlakjdf", "wadup")
         expect(exists).to eq false
       end
+
+      it "is given an identifier that does not exist" do
+        exists = described_class.exists_for?("bladlakjdf", "boggle")
+        expect(exists).to eq false
+
+      end
+
     end
   end
 

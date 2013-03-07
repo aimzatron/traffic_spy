@@ -27,9 +27,9 @@ module TrafficSpy
       Campaign.new(data.select.where(name: name).to_a.first)
     end
 
-    def self.find_by_client_id client_id
-      Campaign.new data.select.where(client_id: client_id).to_a.first
-    end
+#    def self.find_by_client_id client_id
+#      Campaign.new data.select.where(client_id: client_id).to_a.first
+#    end
   end
 
 end

@@ -2,6 +2,20 @@ require 'acceptance_helper'
 
 describe 'Application Details' do
 
+  context "index" do
+    it "has an index page" do
+      visit '/'
+      page.status_code.should eq 200
+    end
+  end
+
+  context "unknown pathh" do
+    it "goes a to the error page" do
+      visit '/blahblahblah'
+      page.status_code.should eq 404
+    end
+  end
+
   context 'identifier does not exist' do
 
     it 'goes to the sources page' do

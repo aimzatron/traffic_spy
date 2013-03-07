@@ -56,7 +56,7 @@ module TrafficSpy
 
       client = Client.find_by_root_url params[:referredBy]
 
-
+      unless client.nil?
       url = get_url params[:url], client
       event = get_event params[:eventName], client
 
@@ -80,9 +80,16 @@ module TrafficSpy
         request_time: DateTime.parse(params[:requestedAt]),
       )
 
+      else
+        return nil
+      end
+
     end
 
     def self.get_url url_string, client
+
+      return nil if client.nil?
+
       url = Url.find_by_url url_string
       if url.nil?
         new_url = Url.new client_id: client.id, url: url_string
@@ -94,6 +101,8 @@ module TrafficSpy
     end
 
     def self.get_event event_name, client
+      return nil if client.nil?
+
       event = Event.find_by name: event_name, client_id: client.id
       if event.nil?
         new_event = Event.new name: event_name, client_id: client.id
@@ -155,9 +164,9 @@ module TrafficSpy
       DB.from :payloads
     end
 
-    def self.find_by_id id
-      Payload.new data.select.where(id: id).first
-    end
+#    def self.find_by_id id
+#      Payload.new data.select.where(id: id).first
+#    end
   end
 
 end

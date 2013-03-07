@@ -38,12 +38,19 @@ module TrafficSpy
 
       payload = TrafficSpy::Payload.create(parse_request(params[:payload]))
 
-      if payload.exists?
+      if payload.nil?
+        halt 400, "There was a problem processing the payload"
+      elsif payload.exists?
         halt 403, "Received a duplicate request"
       else
         payload.save
       end
 
+    end
+
+    get '/sources/?' do
+      @clients = Client.all
+      erb :sources
     end
 
     get '/sources/:identifier/?' do
@@ -106,21 +113,10 @@ module TrafficSpy
       params[:payload].nil?
     end
 
-    def missing_identifier(params)
-      params[:identifier].nil?
-    end
-
-    def save identifier, payload
-      client = Client.find_by_identifier identifier
-    end
-
     def parse_request payload_string
       JSON.parse payload_string, symbolize_names: true
     end
 
-    def event_not_defined(params)
-      params[:event_id].nil?
-    end
 
   end
 end

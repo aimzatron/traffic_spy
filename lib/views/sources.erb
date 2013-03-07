@@ -1,0 +1,49 @@
+
+<style type="text/css">
+div { padding: 5px; }
+#outer {
+    border: 1px dotted #F00;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+}
+#inner {
+    border: 1px dotted #0F0;
+    margin: 0 auto;
+    text-align: center;
+    width: 1400px;
+}
+</style>
+
+<div id="outer">
+    <div id="inner"><img src = "http://i1325.photobucket.com/albums/u637/aimeemaher1/RBWP_zpsaac818be.png" /></div>
+</div>
+<center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<H1 style= "font-family: arial; color: white">ALL SOURCES</H1>
+
+<body background = "http://th06.deviantart.net/fs41/PRE/f/2009/017/9/b/Pretty_Rainbow_Background_by_YuniNaoki.jpg">
+
+<ol>
+
+  <h2 style= "font-family: arial; color: white">URL Requests ordered by request count</h2>
+  <ul>
+    <% @clients.each do |client| %>
+      <li><a href="/sources/<%= client.identifier %>"><%= client.identifier %></a></li>
+    <% end %>
+  </ul>
+
+</body>

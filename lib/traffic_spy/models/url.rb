@@ -28,10 +28,6 @@ module TrafficSpy
       result.nil? ? nil : Url.new(result)
     end
 
-    def payload_data
-      DB.from :payloads_table
-    end
-
     def relative_path
         URI(url).path
     end
