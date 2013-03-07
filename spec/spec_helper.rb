@@ -1,4 +1,9 @@
 ENV['TRAFFIC_SPY_ENV'] ||= "test"
+require 'simplecov'
+
+SimpleCov.start do
+  add_filter "spec"
+end
 
 require 'traffic_spy'
 
