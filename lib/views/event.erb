@@ -1,50 +1,48 @@
 <html>
-    <head><title>URL</title>
-<style type="text/css">
-div { padding: 5px; }
-#outer {
-    border: 1px dotted #F00;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-}
-#inner {
-    border: 1px dotted #0F0;
-    margin: 0 auto;
-    text-align: center;
-    width: 1400px;
-}
-</style></head>
+  <head>
+    <title>URL</title>
+    <style type="text/css">
+      div { padding: 5px; }
+      #outer {
+        //border: 1px dotted #F00;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+      }
+      #inner {
+        //border: 1px dotted #0F0;
+        margin: 0 auto;
+        text-align: center;
+        width: 1400px;
+      }
+  </style></head>
 
-<body background = "http://th06.deviantart.net/fs41/PRE/f/2009/017/9/b/Pretty_Rainbow_Background_by_YuniNaoki.jpg">
-<div id="outer">
-    <div id="inner"><img src = "http://i1325.photobucket.com/albums/u637/aimeemaher1/RBWP_zpsaac818be.png" /></div>
-</div>
-<center>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<center>
-  WWHHYYYY
-<%= @event.class %>
-<%= @event.name %>
-<H1 style= "font-family: arial; color: white">Event: <%= @event.name %></H1>
+  <body background = "http://th06.deviantart.net/fs41/PRE/f/2009/017/9/b/Pretty_Rainbow_Background_by_YuniNaoki.jpg">
+    <div id="outer">
+      <div id="inner"><img src = "http://i1325.photobucket.com/albums/u637/aimeemaher1/RBWP_zpsaac818be.png" /></div>
+    </div>
+    <center>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <H1 style= "font-family: arial; color: white">Event: <%= @event.name %></H1>
 
-<ul style= "font-family: arial; color: white">
-  <% @event.request_times.each_with_index do |count, hour| %>
-    <%= hour %> : <%= count %> requests <br>
-  <% end %>
-</ul>
-</center>
-</body>
+      <ul style= "font-family: arial; color: white">
+        <% @event.request_times.each_with_index do |count, hour| %>
+          <%= hour %> : <%= count %> requests <br>
+        <% end %>
+      </ul>
+    </center>
+  </body>
+</html>

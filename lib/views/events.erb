@@ -1,53 +1,56 @@
-<style type="text/css">
-div { padding: 5px; }
-#outer {
-    border: 1px dotted #F00;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-}
-#inner {
-    border: 1px dotted #0F0;
-    margin: 0 auto;
-    text-align: center;
-    width: 1400px;
-}
-</style>
+<html>
+  <head>
+    <style type="text/css">
+      div { padding: 5px; }
+      #outer {
+        // border: 1px dotted #F00;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+      }
+      #inner {
+        //border: 1px dotted #0F0;
+        margin: 0 auto;
+        text-align: center;
+        width: 1400px;
+      }
+    </style>
 
-<div id="outer">
-    <div id="inner"><img src = "http://i1325.photobucket.com/albums/u637/aimeemaher1/RBWP_zpsaac818be.png" /></div>
-</div>
-<center>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<body background = "http://th06.deviantart.net/fs41/PRE/f/2009/017/9/b/Pretty_Rainbow_Background_by_YuniNaoki.jpg">
-<center>
-<H1 style= "font-family: arial; color: white"><%= @client.identifier %> Events</H1>
+  </head>
+  <body background = "http://th06.deviantart.net/fs41/PRE/f/2009/017/9/b/Pretty_Rainbow_Background_by_YuniNaoki.jpg">
+    <div id="outer">
+      <div id="inner"><img src = "http://i1325.photobucket.com/albums/u637/aimeemaher1/RBWP_zpsaac818be.png" /></div>
+    </div>
+    <center>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <H1 style= "font-family: arial; color: white"><%= @client.identifier %> Events</H1>
 
-<% if @client.events.empty? %>
-  <li style= "font-family: arial; color: white">No events have been defined <a href="./">Get back in the saddle!</a></li>
-<% else %>
-  <ul style= "font-family: arial; color: white">
-    <% @client.events.sort_by{|event| event.times_received}.each do |event| %>
-      <li style= "font-family: arial; color: white">
-      <a href="/sources/<%=@client.identifier%>/events/<%= event.name%>"><%= event.name %></a> : <%= event.times_received %>
-      </li>
-    <% end %>
+      <% if @client.events.empty? %>
+        <li style= "font-family: arial; color: white">No events have been defined <a href="./">Get back in the saddle!</a></li>
+      <% else %>
+        <ul style= "font-family: arial; color: white">
+          <% @client.events.sort_by{|event| event.times_received}.each do |event| %>
+            <li style= "font-family: arial; color: white">
+            <a href="/sources/<%=@client.identifier%>/events/<%= event.name%>"><%= event.name %></a> : <%= event.times_received %>
+            </li>
+          <% end %>
 
 
-  </ul>
-<% end %>
-</center>
-</body>
+        </ul>
+      <% end %>
+    </center>
+  </body>
+</html>
