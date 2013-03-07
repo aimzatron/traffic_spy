@@ -34,9 +34,12 @@ module TrafficSpy
         halt 400, "Request is incomplete. Missing payload."
       end
 
-      request = parse_request(params[:payload])
+      client = Client.find_by_identifier params[:identifier]
 
-      payload = TrafficSpy::Payload.create(parse_request(params[:payload]))
+      request = parse_request(params[:payload])
+      request[:referredBy] = client.root_url
+
+      payload = TrafficSpy::Payload.create(request)
 
       if payload.nil?
         halt 400, "There was a problem processing the payload"
