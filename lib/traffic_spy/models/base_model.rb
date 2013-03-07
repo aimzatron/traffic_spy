@@ -7,13 +7,40 @@ module TrafficSpy
     end
 
     def valid?
-      data.columns.each_with_object(true) do |column, valid|
-
+      data.columns.inject(true) do |valid, column|
+        if column != :id
+          !send(column).nil? && valid
+        else
+          valid
+        end
       end
     end
 
+    def invalid?
+      not valid?
+    end
+
+    def exists?
+      id.nil? ? false : (!data.where(id: id).empty?)
+    end
+
+    def save
+      raise ArgumentError if invalid? || exists?
+
+      values = data.columns.each_with_object({}) do |column, hash|
+        hash[column] = send(column)
+      end
+      @id = data.insert(values)
+
+      return self
+    end
+
+
+    def data
+      self.class.data
+    end
+
     def self.data
-      puts "getting data"
       DB.from(table_name)
     end
 
@@ -29,8 +56,18 @@ module TrafficSpy
     def self.define_find_by_methods
       data.columns.each do |column|
         define_singleton_method("find_by_#{column}") do |val|
-          data.where(column_name => val)
+          new data.where(column => val).first
         end
+      end
+    end
+
+    def == (other)
+      if other.kind_of? self.class
+        data.columns.inject(true) do |equal, column|
+          (send(column) == other.send(column)) && equal
+        end
+      else
+        false
       end
     end
 
