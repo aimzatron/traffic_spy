@@ -1,44 +1,84 @@
-<H1>Application Details for <%= @client.identifier %></H1>
 
-<h2>URL Requests ordered by request count</h2>
-<ul>
-  <% @client.urls.each do |url| %>
-    <li><a href="/sources/<%= @client.identifier %>/urls<%= url.relative_path%>"><%= url.url %></a></li>
-  <% end %>
-</ul>
+<style type="text/css">
+div { padding: 5px; }
+#outer {
+    border: 1px dotted #F00;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+}
+#inner {
+    border: 1px dotted #0F0;
+    margin: 0 auto;
+    text-align: center;
+    width: 1400px;
+}
+</style>
 
-<h2>Web Browser Breakdown</h2> <ul>
-  <% @client.web_browsers.each do |(browser, count)| %>
-    <li><%= browser %> : <%= count %></li>
-  <% end %>
-</ul>
+<div id="outer">
+    <div id="inner"><img src = "http://i1325.photobucket.com/albums/u637/aimeemaher1/RBWP_zpsaac818be.png" /></div>
+</div>
+<center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<H1 style= "font-family: arial; color: white">Application Details for <%= @client.identifier %></H1>
 
-<h2>Operating System Breakdown</h2> <ul>
-  <% @client.operating_systems.each do |(os, count)| %>
-    <li><%= os %> : <%= count %></li>
-  <% end %>
-</ul>
+<body background = "http://th06.deviantart.net/fs41/PRE/f/2009/017/9/b/Pretty_Rainbow_Background_by_YuniNaoki.jpg">
 
-<h2>Operating System Breakdown</h2> <ul>
-  <% @client.screen_resolutions.each do |(screen, count)| %>
-    <li><%= screen %> : <%= count %></li>
-  <% end %>
-</ul>
+<ol>
 
-<h2>URL ordered by average response time</h2> <ul>
-  <% urls = @client.urls.sort_by{|url| url.average_response_time} %>
-  <% urls.each do |url| %>
-    <li><%= url.url %> : <%= url.average_response_time %> ms</li>
-  <% end %>
-</ul>
+  <h2 style= "font-family: arial; color: white">URL Requests ordered by request count</h2>
+  <ul>
+    <% @client.urls.each do |url| %>
+      <li><a href="/sources/<%= @client.identifier %>/urls<%= url.relative_path%>"><%= url.url %></a></li>
+    <% end %>
+  </ul>
+
+  <h2 style= "font-family: arial; color: white">Web Browser Breakdown</h2> <ul>
+    <% @client.web_browsers.each do |(browser, count)| %>
+      <li><%= browser %> : <%= count %></li>
+    <% end %>
+  </ul>
+
+  <h2 style= "font-family: arial; color: white">Operating System Breakdown</h2> <ul>
+    <% @client.operating_systems.each do |(os, count)| %>
+      <li><%= os %> : <%= count %></li>
+    <% end %>
+  </ul>
+
+  <h2 style= "font-family: arial; color: white">Operating System Breakdown</h2> <ul>
+    <% @client.screen_resolutions.each do |(screen, count)| %>
+      <li><%= screen %> : <%= count %></li>
+    <% end %>
+  </ul>
+
+  <h2 style= "font-family: arial; color: white">URL ordered by average response time</h2> <ul>
+    <% urls = @client.urls.sort_by{|url| url.average_response_time} %>
+    <% urls.each do |url| %>
+      <li><%= url.url %> : <%= url.average_response_time %> ms</li>
+    <% end %>
+  </ul>
 
 
-<h2>Screen Resolution Breakdown</h2> <ul>
-  <% @client.screen_resolutions.each do |(screen, count)| %>
-    <li><%= screen %> : <%= count %></li>
-  <% end %>
-</ul>
+  <h2 style= "font-family: arial; color: white">Screen Resolution Breakdown</h2> <ul>
+    <% @client.screen_resolutions.each do |(screen, count)| %>
+      <li><%= screen %> : <%= count %></li>
+    <% end %>
+  </ul>
+</ol>
 
-<h2>Events</h2>
+<h2 style= "font-family: arial; color: white">Events</h2>
 <a href="<%= @client.identifier %>/events">Click to see events</a>
-
+</body>

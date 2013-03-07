@@ -1,6 +1,24 @@
-<H1>Event: <%= @event.name %></H1>
+<div id="outer">
+    <div id="inner"><img src = "http://i1325.photobucket.com/albums/u637/aimeemaher1/RBWP_zpsaac818be.png" /></div>
+</div>
+<center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<center>
+<H1 style= "font-family: arial; color: white">Event: <%= @event.name %></H1>
 
-<ul>
+<ul style= "font-family: arial; color: white">
   <% @event.request_times.each_with_index do |count, hour| %>
 
     <li>
@@ -8,3 +26,5 @@
     </li>
   <% end %>
 </ul>
+</center>
+</body>
