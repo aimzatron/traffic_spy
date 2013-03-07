@@ -2,14 +2,12 @@ require 'spec_helper'
 
 describe TrafficSpy::Client do
 
-  describe "new" do
-    it "creates a new client" do
+  describe ".new" do
 
-      client = described_class.new(identifier:"id", root_url:"url")
-      expect(client.id).to be_nil
-      expect(client.identifier).to eq "id"
-      expect(client.root_url).to eq "url"
-
+      it "instantiates a new client" do
+        client = described_class.new(identifier:"id", root_url:"url")
+        expect(client.identifier).to eq "id"
+        expect(client.root_url).to eq "url"
     end
   end
 

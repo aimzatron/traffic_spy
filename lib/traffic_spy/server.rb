@@ -1,3 +1,5 @@
+require 'traffic_spy/controllers/clients_controller'
+
 module TrafficSpy
   class Server < Sinatra::Base
     set :views, 'lib/views'

@@ -94,7 +94,7 @@ module TrafficSpy
 
     end
 
-    def self.find_by_identifier identifier
+    def self.find_by_identifier(identifier)
       result = data.select.where(identifier: identifier).first
       Client.new result unless result.nil?
     end
