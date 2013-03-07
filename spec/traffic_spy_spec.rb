@@ -112,12 +112,12 @@ describe "Traffic Spy App" do
       end
 
       it "returns a 200 ok status" do
-        post '/sources/indentifier/data', {payload: payload}
+        post '/sources/jumpstartlab/data', {payload: payload}
         expect(last_response).to be_ok
       end
 
       it "adds the payload to the database" do
-        post '/sources/indentifier/data', {payload: payload}
+        post '/sources/jumpstartlab/data', {payload: payload}
         expect(payloads_table.count).to eq 1
       end
     end
@@ -127,14 +127,14 @@ describe "Traffic Spy App" do
       before {insert_client}
 
       it "returns a 403 forbidden status" do
-        post '/sources/indentifier/data', {payload: payload}
-        post '/sources/indentifier/data', {payload: payload}
+        post '/sources/jumpstartlab/data', {payload: payload}
+        post '/sources/jumpstartlab/data', {payload: payload}
         expect(last_response).to be_forbidden
       end
 
       it "does not add a new entry to the db" do
-        post '/sources/indentifier/data', {payload: payload}
-        post '/sources/indentifier/data', {payload: payload}
+        post '/sources/jumpstartlab/data', {payload: payload}
+        post '/sources/jumpstartlab/data', {payload: payload}
         expect(payloads_table.count).to eq 1
       end
 
